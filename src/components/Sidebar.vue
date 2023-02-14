@@ -30,6 +30,15 @@
                 <span>Product Category</span>
             </router-link>
 
+            <router-link
+                to="/products"
+                class="sidebar-item"
+                :class="this.$route.meta.name_page == 'products' ? 'active' : ''"
+            >
+                <font-awesome-icon icon="fa-solid fa-note-sticky" />
+                <span>Product</span>
+            </router-link>
+
             <h5 class="sidebar-title">Others</h5>
 
             <router-link to="/form" class="sidebar-item" :class="this.$route.meta.name_page == 'form' ? 'active' : ''">

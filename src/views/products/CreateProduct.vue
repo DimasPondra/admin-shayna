@@ -7,7 +7,7 @@
                         <img src="" class="mb-2" alt="icon" />
                     </button>
                     <h2 class="nav-title">
-                        <router-link to="/product-categories">Product Category</router-link>
+                        <router-link to="/products">Product</router-link>
                     </h2>
                 </div>
             </div>
@@ -16,21 +16,21 @@
         <div class="content">
             <div class="row">
                 <div class="col-12">
-                    <h2 class="content-title mb-4">Edit Product Category</h2>
+                    <h2 class="content-title mb-4">Create Product</h2>
                 </div>
 
-                <form-product-category></form-product-category>
+                <form-product></form-product>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import FormProductCategory from "../../components/FormProductCategory.vue";
+import FormProduct from "../../components/FormProduct.vue";
 
 export default {
     components: {
-        FormProductCategory,
+        FormProduct,
     },
     created() {
         document.title = `Admin Shayna - ${this.$route.meta.title}`;

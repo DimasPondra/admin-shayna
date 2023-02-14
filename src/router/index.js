@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 
 import ProductCategory from "./routes/product-categories";
+import Product from "./routes/products";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -43,6 +44,7 @@ const router = createRouter({
             },
         },
         ...ProductCategory,
+        ...Product,
     ],
 });
 

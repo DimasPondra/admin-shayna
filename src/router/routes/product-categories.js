@@ -13,7 +13,7 @@ export default [
         name: "create-product-category",
         component: () => import("../../views/product-categories/CreateProductCategory.vue"),
         meta: {
-            title: "Create Product Categories",
+            title: "Create Product Category",
             name_page: "product-categories",
         },
     },
@@ -22,7 +22,7 @@ export default [
         name: "edit-product-category",
         component: () => import("../../views/product-categories/EditProductCategory.vue"),
         meta: {
-            title: "Edit Product Categories",
+            title: "Edit Product Category",
             name_page: "product-categories",
         },
     },
