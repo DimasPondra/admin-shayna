@@ -7,7 +7,7 @@
                         <font-awesome-icon icon="fa-solid fa-bars" />
                     </button>
                     <h2 class="nav-title">
-                        <a href="#">Form</a>
+                        <router-link to="/form">Form</router-link>
                     </h2>
                 </div>
             </div>
@@ -118,7 +118,7 @@
                         </div>
 
                         <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn btn-sm btn-success">Save</button>
+                            <button class="btn btn-sm btn-success">Save</button>
                         </div>
                     </form>
                 </div>

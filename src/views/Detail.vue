@@ -7,7 +7,7 @@
                         <font-awesome-icon icon="fa-solid fa-bars" />
                     </button>
                     <h2 class="nav-title">
-                        <a href="">Package</a>
+                        <router-link to="/detail">Package</router-link>
                     </h2>
                 </div>
             </div>
@@ -18,7 +18,7 @@
                 <div class="col-12 d-flex justify-content-between">
                     <h2 class="content-title mb-4">Detail Package</h2>
                     <div class="d-flex align-items-center">
-                        <a href="" class="btn btn-sm btn-primary me-2">Edit</a>
+                        <router-link to="/form" class="btn btn-sm btn-primary me-2">Edit</router-link>
                         <form action="#" method="">
                             <button
                                 type="submit"
@@ -141,7 +141,7 @@
                 <div class="col-12 mt-3 mb-3 d-flex justify-content-between">
                     <h2 class="content-title">Package Images</h2>
                     <div class="d-flex align-items-center">
-                        <a href="" class="btn btn-sm btn-primary">Upload Image</a>
+                        <router-link to="/form" class="btn btn-sm btn-primary">Upload Image</router-link>
                     </div>
                 </div>
 
@@ -156,10 +156,11 @@
                                         alt="package-image"
                                     />
                                     <div class="card-body p-0">
-                                        <form action="#" method="POST">
+                                        <form>
                                             <button
                                                 type="submit"
                                                 class="btn btn-sm btn-danger w-100 rounded-0 rounded-bottom"
+                                                onclick="return confirm('Are you sure to delete?')"
                                             >
                                                 Delete
                                             </button>
@@ -175,10 +176,11 @@
                                         alt="package-image"
                                     />
                                     <div class="card-body p-0">
-                                        <form action="#" method="POST">
+                                        <form>
                                             <button
                                                 type="submit"
                                                 class="btn btn-sm btn-danger w-100 rounded-0 rounded-bottom"
+                                                onclick="return confirm('Are you sure to delete?')"
                                             >
                                                 Delete
                                             </button>
@@ -194,10 +196,11 @@
                                         alt="package-image"
                                     />
                                     <div class="card-body p-0">
-                                        <form action="#" method="POST">
+                                        <form>
                                             <button
                                                 type="submit"
                                                 class="btn btn-sm btn-danger w-100 rounded-0 rounded-bottom"
+                                                onclick="return confirm('Are you sure to delete?')"
                                             >
                                                 Delete
                                             </button>

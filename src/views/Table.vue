@@ -7,7 +7,7 @@
                         <font-awesome-icon icon="fa-solid fa-bars" />
                     </button>
                     <h2 class="nav-title">
-                        <a href="#">Table</a>
+                        <router-link to="/table">Table</router-link>
                     </h2>
                 </div>
             </div>
@@ -18,7 +18,7 @@
                 <div class="col-12 d-flex justify-content-between">
                     <h2 class="content-title mb-4">List Package</h2>
                     <div class="btn mb-2 mb-md-0">
-                        <a href="" class="btn btn-sm btn-primary"> Add new package </a>
+                        <router-link to="/form" class="btn btn-sm btn-primary">Add new package</router-link>
                     </div>
                 </div>
 
@@ -81,10 +81,18 @@
                                                 ></button>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                                                     <li>
-                                                        <a href="" class="btn btn-sm btn-link w-100 text-start">Show</a>
+                                                        <router-link
+                                                            to="/detail"
+                                                            class="btn btn-sm btn-link w-100 text-start"
+                                                            >Show</router-link
+                                                        >
                                                     </li>
                                                     <li>
-                                                        <a href="" class="btn btn-sm btn-link w-100 text-start">Edit</a>
+                                                        <router-link
+                                                            to="/form"
+                                                            class="btn btn-sm btn-link w-100 text-start"
+                                                            >Edit</router-link
+                                                        >
                                                     </li>
                                                     <li>
                                                         <form action="#" method="">
@@ -117,10 +125,18 @@
                                                 ></button>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                                                     <li>
-                                                        <a href="" class="btn btn-sm btn-link w-100 text-start">Show</a>
+                                                        <router-link
+                                                            to="/detail"
+                                                            class="btn btn-sm btn-link w-100 text-start"
+                                                            >Show</router-link
+                                                        >
                                                     </li>
                                                     <li>
-                                                        <a href="" class="btn btn-sm btn-link w-100 text-start">Edit</a>
+                                                        <router-link
+                                                            to="/form"
+                                                            class="btn btn-sm btn-link w-100 text-start"
+                                                            >Edit</router-link
+                                                        >
                                                     </li>
                                                     <li>
                                                         <form action="#" method="">
@@ -153,10 +169,18 @@
                                                 ></button>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                                                     <li>
-                                                        <a href="" class="btn btn-sm btn-link w-100 text-start">Show</a>
+                                                        <router-link
+                                                            to="/detail"
+                                                            class="btn btn-sm btn-link w-100 text-start"
+                                                            >Show</router-link
+                                                        >
                                                     </li>
                                                     <li>
-                                                        <a href="" class="btn btn-sm btn-link w-100 text-start">Edit</a>
+                                                        <router-link
+                                                            to="/form"
+                                                            class="btn btn-sm btn-link w-100 text-start"
+                                                            >Edit</router-link
+                                                        >
                                                     </li>
                                                     <li>
                                                         <form action="#" method="">
@@ -189,10 +213,18 @@
                                                 ></button>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                                                     <li>
-                                                        <a href="" class="btn btn-sm btn-link w-100 text-start">Show</a>
+                                                        <router-link
+                                                            to="/detail"
+                                                            class="btn btn-sm btn-link w-100 text-start"
+                                                            >Show</router-link
+                                                        >
                                                     </li>
                                                     <li>
-                                                        <a href="" class="btn btn-sm btn-link w-100 text-start">Edit</a>
+                                                        <router-link
+                                                            to="/form"
+                                                            class="btn btn-sm btn-link w-100 text-start"
+                                                            >Edit</router-link
+                                                        >
                                                     </li>
                                                     <li>
                                                         <form action="#" method="">
@@ -225,10 +257,18 @@
                                                 ></button>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                                                     <li>
-                                                        <a href="" class="btn btn-sm btn-link w-100 text-start">Show</a>
+                                                        <router-link
+                                                            to="/detail"
+                                                            class="btn btn-sm btn-link w-100 text-start"
+                                                            >Show</router-link
+                                                        >
                                                     </li>
                                                     <li>
-                                                        <a href="" class="btn btn-sm btn-link w-100 text-start">Edit</a>
+                                                        <router-link
+                                                            to="/form"
+                                                            class="btn btn-sm btn-link w-100 text-start"
+                                                            >Edit</router-link
+                                                        >
                                                     </li>
                                                     <li>
                                                         <form action="#" method="">
