@@ -1,7 +1,7 @@
 <template>
     <div class="col-12 col-lg-3 col-navbar d-xl-block" :class="navbar">
         <aside class="sidebar">
-            <router-link to="/" class="sidebar-logo">
+            <router-link to="" class="sidebar-logo">
                 <div class="d-flex justify-content-start align-items-center">
                     <img src="../assets/images/global/logo.svg" alt="logo" />
                     <span>Admin Panel</span>

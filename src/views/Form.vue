@@ -3,7 +3,7 @@
         <div class="nav">
             <div class="d-flex justify-content-between align-items-center w-100 mb-3 mb-md-0">
                 <div class="d-flex justify-content-start align-items-center">
-                    <button id="toggle-navbar" onclick="toggleNavbar()">
+                    <button id="toggle-navbar" @click="toggleNavbar()">
                         <img src="" class="mb-2" alt="icon" />
                     </button>
                     <h2 class="nav-title">
@@ -131,6 +131,11 @@
 export default {
     created() {
         document.title = `Admin Shayna - ${this.$route.meta.title}`;
+    },
+    methods: {
+        toggleNavbar() {
+            this.$emit("clicked", "open");
+        },
     },
 };
 </script>

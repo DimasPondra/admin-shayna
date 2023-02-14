@@ -3,7 +3,7 @@
         <div class="nav">
             <div class="d-flex justify-content-between align-items-center w-100 mb-3 mb-md-0">
                 <div class="d-flex justify-content-start align-items-center">
-                    <button id="toggle-navbar" onclick="toggleNavbar()">
+                    <button id="toggle-navbar" @click="toggleNavbar()">
                         <font-awesome-icon icon="fa-solid fa-bars" />
                     </button>
                     <h2 class="nav-title">Products</h2>
@@ -135,6 +135,9 @@ export default {
             } catch (error) {
                 console.error(error);
             }
+        },
+        toggleNavbar() {
+            this.$emit("clicked", "open");
         },
     },
 };
