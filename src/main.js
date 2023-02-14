@@ -16,6 +16,7 @@ import {
     faBell,
     faBars,
     faUserCheck,
+    faClose,
 } from "@fortawesome/free-solid-svg-icons";
 
 import "./assets/css/main.css";
@@ -34,7 +35,8 @@ library.add(
     faMagnifyingGlass,
     faBell,
     faBars,
-    faUserCheck
+    faUserCheck,
+    faClose
 );
 
 const app = createApp(App);

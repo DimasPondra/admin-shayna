@@ -1,5 +1,5 @@
 <template>
-    <div class="col-12 col-lg-3 col-navbar d-none d-xl-block">
+    <div class="col-12 col-lg-3 col-navbar d-xl-block" :class="navbar">
         <aside class="sidebar">
             <router-link to="/" class="sidebar-logo">
                 <div class="d-flex justify-content-start align-items-center">
@@ -7,8 +7,8 @@
                     <span>Admin Panel</span>
                 </div>
 
-                <button id="toggle-navbar" onclick="toggleNavbar()">
-                    <img src="" alt="" />
+                <button id="toggle-navbar" @click="toggleNavbar()">
+                    <font-awesome-icon icon="fa-solid fa-close" />
                 </button>
             </router-link>
 
@@ -71,3 +71,16 @@
         </aside>
     </div>
 </template>
+
+<script>
+export default {
+    props: {
+        navbar: "",
+    },
+    methods: {
+        toggleNavbar() {
+            this.$emit("closed", "close");
+        },
+    },
+};
+</script>
