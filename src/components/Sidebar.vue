@@ -14,10 +14,21 @@
 
             <h5 class="sidebar-title">Daily Use</h5>
 
-            <a href="" class="sidebar-item active">
+            <a href="" class="sidebar-item">
                 <font-awesome-icon icon="fa-solid fa-house" />
                 <span>Overview</span>
             </a>
+
+            <h5 class="sidebar-title">Products</h5>
+
+            <router-link
+                to="/product-categories"
+                class="sidebar-item"
+                :class="this.$route.meta.name_page == 'product-categories' ? 'active' : ''"
+            >
+                <font-awesome-icon icon="fa-solid fa-note-sticky" />
+                <span>Product Category</span>
+            </router-link>
 
             <h5 class="sidebar-title">Others</h5>
 

@@ -20,6 +20,11 @@ import {
 
 import "./assets/css/main.css";
 
+import "./axios";
+
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
+
 library.add(
     faHouse,
     faTableList,
@@ -36,6 +41,7 @@ const app = createApp(App);
 
 app.use(router);
 app.use(bootstrap);
+app.use(Toast);
 app.component("font-awesome-icon", FontAwesomeIcon);
 
 app.mount("#app");
