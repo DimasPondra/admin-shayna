@@ -151,7 +151,7 @@
                             <div class="col-12 col-md-3 mb-3 mb-md-0">
                                 <div class="card w-100">
                                     <img
-                                        src="images/employee/photo-1.png"
+                                        src="../assets/images/employee/photo-1.png"
                                         class="thumbnail-image rounded-top"
                                         alt="package-image"
                                     />
@@ -170,7 +170,7 @@
                             <div class="col-12 col-md-3 mb-3 mb-md-0">
                                 <div class="card w-100">
                                     <img
-                                        src="images/employee/photo-2.png"
+                                        src="../assets/images/employee/photo-2.png"
                                         class="thumbnail-image rounded-top"
                                         alt="package-image"
                                     />
@@ -189,7 +189,7 @@
                             <div class="col-12 col-md-3 mb-3 mb-md-0">
                                 <div class="card w-100">
                                     <img
-                                        src="images/employee/photo-3.png"
+                                        src="../assets/images/employee/photo-3.png"
                                         class="thumbnail-image rounded-top"
                                         alt="package-image"
                                     />

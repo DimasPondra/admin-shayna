@@ -77,7 +77,7 @@
 
                 <div class="col-6 col-md-4 col-lg-3">
                     <div class="d-flex flex-column justify-content-between align-items-center employee-card w-100">
-                        <img src="images/employee/photo.png" alt="employee-image" class="employee-img" />
+                        <img src="../assets/images/employee/photo.png" alt="employee-image" class="employee-img" />
 
                         <div class="d-flex flex-column justify-content-center align-items-center mt-3">
                             <h4 class="employee-name">Andini Danna</h4>
@@ -97,7 +97,7 @@
 
                 <div class="col-6 col-md-4 col-lg-3">
                     <div class="d-flex flex-column justify-content-between align-items-center employee-card w-100">
-                        <img src="images/employee/photo-1.png" alt="employee-image" class="employee-img" />
+                        <img src="../assets/images/employee/photo-1.png" alt="employee-image" class="employee-img" />
 
                         <div class="d-flex flex-column justify-content-center align-items-center mt-3">
                             <h4 class="employee-name">Ferrari Three</h4>
@@ -117,7 +117,7 @@
 
                 <div class="col-6 col-md-4 col-lg-3">
                     <div class="d-flex flex-column justify-content-between align-items-center employee-card w-100">
-                        <img src="images/employee/photo-2.png" alt="employee-image" class="employee-img" />
+                        <img src="../assets/images/employee/photo-2.png" alt="employee-image" class="employee-img" />
 
                         <div class="d-flex flex-column justify-content-center align-items-center mt-3">
                             <h4 class="employee-name">Sapiire Muke</h4>
@@ -133,7 +133,7 @@
 
                 <div class="col-6 col-md-4 col-lg-3">
                     <div class="d-flex flex-column justify-content-between align-items-center employee-card w-100">
-                        <img src="images/employee/photo-3.png" alt="employee-image" class="employee-img" />
+                        <img src="../assets/images/employee/photo-3.png" alt="employee-image" class="employee-img" />
 
                         <div class="d-flex flex-column justify-content-center align-items-center mt-3">
                             <h4 class="employee-name">Mw Kemanna</h4>
@@ -153,7 +153,7 @@
 
                 <div class="col-6 col-md-4 col-lg-3">
                     <div class="d-flex flex-column justify-content-between align-items-center employee-card w-100">
-                        <img src="images/employee/photo-4.png" alt="employee-image" class="employee-img" />
+                        <img src="../assets/images/employee/photo-4.png" alt="employee-image" class="employee-img" />
 
                         <div class="d-flex flex-column justify-content-center align-items-center mt-3">
                             <h4 class="employee-name">Onna Appa</h4>
@@ -173,7 +173,7 @@
 
                 <div class="col-6 col-md-4 col-lg-3">
                     <div class="d-flex flex-column justify-content-between align-items-center employee-card w-100">
-                        <img src="images/employee/photo-5.png" alt="employee-image" class="employee-img" />
+                        <img src="../assets/images/employee/photo-5.png" alt="employee-image" class="employee-img" />
 
                         <div class="d-flex flex-column justify-content-center align-items-center mt-3">
                             <h4 class="employee-name">Hehe Nadiia</h4>
@@ -193,7 +193,7 @@
 
                 <div class="col-6 col-md-4 col-lg-3">
                     <div class="d-flex flex-column justify-content-between align-items-center employee-card w-100">
-                        <img src="images/employee/photo-6.png" alt="employee-image" class="employee-img" />
+                        <img src="../assets/images/employee/photo-6.png" alt="employee-image" class="employee-img" />
 
                         <div class="d-flex flex-column justify-content-center align-items-center mt-3">
                             <h4 class="employee-name">Jamboel</h4>
@@ -209,7 +209,7 @@
 
                 <div class="col-6 col-md-4 col-lg-3">
                     <div class="d-flex flex-column justify-content-between align-items-center employee-card w-100">
-                        <img src="images/employee/photo-7.png" alt="employee-image" class="employee-img" />
+                        <img src="../assets/images/employee/photo-7.png" alt="employee-image" class="employee-img" />
 
                         <div class="d-flex flex-column justify-content-center align-items-center mt-3">
                             <h4 class="employee-name">Eksis Melita</h4>

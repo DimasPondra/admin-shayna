@@ -3,7 +3,7 @@
         <aside class="sidebar">
             <router-link to="/" class="sidebar-logo">
                 <div class="d-flex justify-content-start align-items-center">
-                    <img src="images/global/logo.svg" alt="logo" />
+                    <img src="../assets/images/global/logo.svg" alt="logo" />
                     <span>Admin Panel</span>
                 </div>
 
