@@ -1,7 +1,7 @@
 <template>
     <div class="col-12 col-lg-3 col-navbar d-none d-xl-block">
         <aside class="sidebar">
-            <a href="" class="sidebar-logo">
+            <router-link to="/" class="sidebar-logo">
                 <div class="d-flex justify-content-start align-items-center">
                     <img src="images/global/logo.svg" alt="logo" />
                     <span>Admin Panel</span>
@@ -10,14 +10,14 @@
                 <button id="toggle-navbar" onclick="toggleNavbar()">
                     <img src="" alt="" />
                 </button>
-            </a>
+            </router-link>
 
             <h5 class="sidebar-title">Daily Use</h5>
 
-            <a href="" class="sidebar-item">
+            <router-link to="/" class="sidebar-item" :class="this.$route.meta.name_page == 'dashboard' ? 'active' : ''">
                 <font-awesome-icon icon="fa-solid fa-house" />
                 <span>Overview</span>
-            </a>
+            </router-link>
 
             <h5 class="sidebar-title">Products</h5>
 
@@ -32,20 +32,28 @@
 
             <h5 class="sidebar-title">Others</h5>
 
-            <a href="" class="sidebar-item">
+            <router-link to="/form" class="sidebar-item" :class="this.$route.meta.name_page == 'form' ? 'active' : ''">
                 <font-awesome-icon icon="fa-solid fa-note-sticky" />
                 <span>Form</span>
-            </a>
+            </router-link>
 
-            <a href="" class="sidebar-item">
+            <router-link
+                to="/table"
+                class="sidebar-item"
+                :class="this.$route.meta.name_page == 'table' ? 'active' : ''"
+            >
                 <font-awesome-icon icon="fa-solid fa-table-list" />
                 <span>Table</span>
-            </a>
+            </router-link>
 
-            <a href="details.html" class="sidebar-item">
+            <router-link
+                to="/detail"
+                class="sidebar-item"
+                :class="this.$route.meta.name_page == 'detail' ? 'active' : ''"
+            >
                 <font-awesome-icon icon="fa-solid fa-file-lines" />
                 <span>Details</span>
-            </a>
+            </router-link>
 
             <a href="#" class="sidebar-item">
                 <font-awesome-icon icon="fa-solid fa-arrow-right-from-bracket" />

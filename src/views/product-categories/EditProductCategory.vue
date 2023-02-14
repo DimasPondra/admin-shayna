@@ -32,5 +32,8 @@ export default {
     components: {
         FormProductCategory,
     },
+    created() {
+        document.title = `Admin Shayna - ${this.$route.meta.title}`;
+    },
 };
 </script>

@@ -258,4 +258,10 @@
 <script>
 import "@popperjs/core";
 import "bootstrap/dist/js/bootstrap.bundle";
+
+export default {
+    created() {
+        document.title = `Admin Shayna - ${this.$route.meta.title}`;
+    },
+};
 </script>

@@ -114,6 +114,7 @@ export default {
     },
     created() {
         this.loadData();
+        document.title = `Admin Shayna - ${this.$route.meta.title}`;
     },
     methods: {
         async loadData() {

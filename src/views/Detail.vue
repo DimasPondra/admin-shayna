@@ -212,3 +212,11 @@
         </div>
     </div>
 </template>
+
+<script>
+export default {
+    created() {
+        document.title = `Admin Shayna - ${this.$route.meta.title}`;
+    },
+};
+</script>
