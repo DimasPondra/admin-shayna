@@ -26,6 +26,8 @@ import "./axios";
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 
+import Pagination from "v-pagination-3";
+
 library.add(
     faHouse,
     faTableList,
@@ -45,5 +47,6 @@ app.use(router);
 app.use(bootstrap);
 app.use(Toast);
 app.component("font-awesome-icon", FontAwesomeIcon);
+app.component("pagination", Pagination);
 
 app.mount("#app");
