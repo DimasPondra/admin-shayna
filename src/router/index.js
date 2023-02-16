@@ -4,6 +4,10 @@ import HomeView from "../views/HomeView.vue";
 import ProductCategory from "./routes/product-categories";
 import Product from "./routes/products";
 
+import VueRouteMiddleware from "vue-route-middleware";
+import AuthMiddleware from "../middleware/auth";
+import GuestMiddleware from "../middleware/guest";
+
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
@@ -14,6 +18,7 @@ const router = createRouter({
             meta: {
                 title: "Dashboard",
                 name_page: "dashboard",
+                middleware: [AuthMiddleware],
             },
         },
         {
@@ -23,6 +28,7 @@ const router = createRouter({
             meta: {
                 title: "Form",
                 name_page: "form",
+                middleware: [AuthMiddleware],
             },
         },
         {
@@ -32,6 +38,7 @@ const router = createRouter({
             meta: {
                 title: "Table",
                 name_page: "table",
+                middleware: [AuthMiddleware],
             },
         },
         {
@@ -41,6 +48,7 @@ const router = createRouter({
             meta: {
                 title: "Detail",
                 name_page: "detail",
+                middleware: [AuthMiddleware],
             },
         },
         {
@@ -50,6 +58,7 @@ const router = createRouter({
             meta: {
                 title: "Login",
                 name_page: "login",
+                middleware: [GuestMiddleware],
             },
         },
         ...ProductCategory,
@@ -57,4 +66,5 @@ const router = createRouter({
     ],
 });
 
+router.beforeEach(VueRouteMiddleware());
 export default router;

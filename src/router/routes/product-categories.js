@@ -1,3 +1,5 @@
+import AuthMiddleware from "../../middleware/auth";
+
 export default [
     {
         path: "/product-categories",
@@ -6,6 +8,7 @@ export default [
         meta: {
             title: "Product Categories",
             name_page: "product-categories",
+            middleware: [AuthMiddleware],
         },
     },
     {
@@ -15,6 +18,7 @@ export default [
         meta: {
             title: "Create Product Category",
             name_page: "product-categories",
+            middleware: [AuthMiddleware],
         },
     },
     {
@@ -24,6 +28,7 @@ export default [
         meta: {
             title: "Edit Product Category",
             name_page: "product-categories",
+            middleware: [AuthMiddleware],
         },
     },
 ];
