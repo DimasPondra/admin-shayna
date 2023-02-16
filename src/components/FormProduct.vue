@@ -116,12 +116,8 @@ export default {
             }
         },
         async loadProductCategories() {
-            try {
-                const response = await axios.get("product-categories");
-                this.product_categories = response.data.data;
-            } catch (error) {
-                console.error(error);
-            }
+            const response = await axios.get("product-categories");
+            this.product_categories = response.data.data;
         },
         async handleSubmit() {
             const toast = useToast();

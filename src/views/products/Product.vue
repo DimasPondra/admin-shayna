@@ -21,24 +21,17 @@
                 </div>
 
                 <div class="col-12 search-menu mb-4">
-                    <form action="" method="GET">
-                        <div class="row d-flex">
-                            <div class="col-12 col-md-3 d-flex">
-                                <input
-                                    type="text"
-                                    class="form-control border-0 shadow-sm"
-                                    name="name"
-                                    value=""
-                                    placeholder="Search name"
-                                />
-                            </div>
-                            <div class="col-12 col-md-2 d-grid d-md-flex mt-3 mt-md-0">
-                                <button class="btn btn-sm btn-warning">
-                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                </button>
-                            </div>
+                    <div class="row d-flex">
+                        <div class="col-12 col-md-3 d-flex">
+                            <input
+                                type="text"
+                                class="form-control border-0 shadow-sm"
+                                name="name"
+                                v-model="search_name"
+                                placeholder="Search name"
+                            />
                         </div>
-                    </form>
+                    </div>
                 </div>
 
                 <div class="col-12">
@@ -90,6 +83,8 @@
                                     </tr>
                                 </tbody>
                             </table>
+
+                            <Pagination :pagination="pagination" @current_page="changePage" />
                         </div>
                     </div>
                 </div>
@@ -105,25 +100,63 @@ import "@popperjs/core";
 import "bootstrap/dist/js/bootstrap.bundle";
 import axios from "axios";
 import { useToast } from "vue-toastification";
+import Pagination from "../../components/Pagination.vue";
 
 export default {
+    components: {
+        Pagination,
+    },
     data() {
         return {
             products: Array,
+            pagination: {
+                page: 1,
+                total: 0,
+                per_page: 5,
+                option: {
+                    chunk: 3,
+                    chunksNavigation: "scroll",
+                    hideCount: true,
+                },
+            },
+            search: {
+                name: "",
+            },
+            search_name: "",
         };
+    },
+    computed: {
+        params: function () {
+            return {
+                page: this.pagination.page,
+                per_page: this.pagination.per_page,
+                name: this.search.name,
+            };
+        },
+    },
+    watch: {
+        search_name(value) {
+            this.search.name = value;
+            this.pagination.page = 1;
+            this.loadData();
+        },
     },
     created() {
         this.loadData();
         document.title = `Admin Shayna - ${this.$route.meta.title}`;
     },
     methods: {
-        async loadData() {
-            try {
-                const response = await axios.get("products");
-                this.products = response.data.data;
-            } catch (error) {
-                console.error(error);
-            }
+        async loadData(value) {
+            this.params.page = value != null ? value : this.params.page;
+
+            const response = await axios.get("products", {
+                params: this.params,
+            });
+            this.products = response.data.data;
+
+            this.pagination.page = response.data.meta.current_page;
+            this.pagination.total = response.data.meta.total;
+            this.pagination.per_page = response.data.meta.per_page;
         },
         async handleDelete(id) {
             try {
@@ -138,6 +171,9 @@ export default {
         },
         toggleNavbar() {
             this.$emit("clicked", "open");
+        },
+        changePage(value) {
+            this.loadData(value);
         },
     },
 };
