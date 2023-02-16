@@ -1,20 +1,23 @@
-<script setup>
-import { RouterLink, RouterView } from "vue-router";
-import Sidebar from "./components/Sidebar.vue";
-</script>
-
 <template>
     <div class="screen-cover d-xl-none" :class="cover"></div>
 
     <div class="row">
         <Sidebar :navbar="navbar" @closed="toggleNavbar" />
 
-        <RouterView @clicked="toggleNavbar" />
+        <RouterView @hide="toggleNavbar" />
     </div>
 </template>
 
 <script>
+import { RouterLink, RouterView } from "vue-router";
+import Sidebar from "./components/Sidebar.vue";
+
 export default {
+    components: {
+        Sidebar,
+        RouterView,
+        RouterLink,
+    },
     data() {
         return {
             cover: "d-none",

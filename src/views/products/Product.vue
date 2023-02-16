@@ -1,15 +1,6 @@
 <template>
     <div class="col-12 col-xl-9">
-        <div class="nav">
-            <div class="d-flex justify-content-between align-items-center w-100 mb-3 mb-md-0">
-                <div class="d-flex justify-content-start align-items-center">
-                    <button id="toggle-navbar" @click="toggleNavbar()">
-                        <font-awesome-icon icon="fa-solid fa-bars" />
-                    </button>
-                    <h2 class="nav-title">Products</h2>
-                </div>
-            </div>
-        </div>
+        <Navbar :navbar="navbar" @clicked="$emit('hide', 'open')" />
 
         <div class="content">
             <div class="row">
@@ -55,11 +46,13 @@ import "@popperjs/core";
 import "bootstrap/dist/js/bootstrap.bundle";
 import axios from "axios";
 import { useToast } from "vue-toastification";
+import Navbar from "../../components/Navbar.vue";
 import TableProduct from "../../components/TableProduct.vue";
 import Pagination from "../../components/Pagination.vue";
 
 export default {
     components: {
+        Navbar,
         TableProduct,
         Pagination,
     },
@@ -80,6 +73,10 @@ export default {
                 name: "",
             },
             search_name: "",
+            navbar: {
+                title: "Products",
+                link: null,
+            },
         };
     },
     computed: {
@@ -125,9 +122,6 @@ export default {
             } catch (error) {
                 console.error(error);
             }
-        },
-        toggleNavbar() {
-            this.$emit("clicked", "open");
         },
         changePage(value) {
             this.loadData(value);

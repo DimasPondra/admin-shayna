@@ -1,17 +1,6 @@
 <template>
     <div class="col-12 col-xl-9">
-        <div class="nav">
-            <div class="d-flex justify-content-between align-items-center w-100 mb-3 mb-md-0">
-                <div class="d-flex justify-content-start align-items-center">
-                    <button id="toggle-navbar" @click="toggleNavbar()">
-                        <font-awesome-icon icon="fa-solid fa-bars" />
-                    </button>
-                    <h2 class="nav-title">
-                        <router-link to="/products">Product</router-link>
-                    </h2>
-                </div>
-            </div>
-        </div>
+        <Navbar :navbar="navbar" @clicked="$emit('hide', 'open')" />
 
         <div class="content">
             <div class="row">
@@ -26,19 +15,24 @@
 </template>
 
 <script>
+import Navbar from "../../components/Navbar.vue";
 import FormProduct from "../../components/FormProduct.vue";
 
 export default {
     components: {
+        Navbar,
         FormProduct,
+    },
+    data() {
+        return {
+            navbar: {
+                title: "Product",
+                link: "/products",
+            },
+        };
     },
     created() {
         document.title = `Admin Shayna - ${this.$route.meta.title}`;
-    },
-    methods: {
-        toggleNavbar() {
-            this.$emit("clicked", "open");
-        },
     },
 };
 </script>
