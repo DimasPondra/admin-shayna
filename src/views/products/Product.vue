@@ -17,7 +17,6 @@
                             <input
                                 type="text"
                                 class="form-control border-0 shadow-sm"
-                                name="name"
                                 v-model="search_name"
                                 placeholder="Search name"
                             />
@@ -38,8 +37,6 @@
         </div>
     </div>
 </template>
-
-<script></script>
 
 <script>
 import "@popperjs/core";

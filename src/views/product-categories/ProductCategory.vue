@@ -44,8 +44,6 @@
     </div>
 </template>
 
-<script></script>
-
 <script>
 import "@popperjs/core";
 import "bootstrap/dist/js/bootstrap.bundle";
