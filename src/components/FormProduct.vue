@@ -93,7 +93,8 @@ export default {
                 url: "",
             },
             folder_name: "products",
-            product_categories: Array,
+            product_categories: [],
+            token: "Bearer " + localStorage.getItem("token"),
         };
     },
     created() {
@@ -103,7 +104,11 @@ export default {
     methods: {
         async loadProduct() {
             if (this.$route.params.id != undefined) {
-                const response = await axios.get(`products/${this.$route.params.id}/show`);
+                const response = await axios.get(`products/${this.$route.params.id}/show`, {
+                    headers: {
+                        Authorization: this.token,
+                    },
+                });
                 const data = response.data.data;
 
                 this.product.id = data.id;
@@ -116,7 +121,11 @@ export default {
             }
         },
         async loadProductCategories() {
-            const response = await axios.get("product-categories");
+            const response = await axios.get("product-categories", {
+                headers: {
+                    Authorization: this.token,
+                },
+            });
             this.product_categories = response.data.data;
         },
         async handleSubmit() {
@@ -124,11 +133,19 @@ export default {
 
             try {
                 if (this.product.id == null) {
-                    await axios.post("products/store", this.product);
+                    await axios.post("products/store", this.product, {
+                        headers: {
+                            Authorization: this.token,
+                        },
+                    });
 
                     toast.success("successfully created.");
                 } else {
-                    await axios.patch(`products/${this.$route.params.id}/update`, this.product);
+                    await axios.patch(`products/${this.$route.params.id}/update`, this.product, {
+                        headers: {
+                            Authorization: this.token,
+                        },
+                    });
                     toast.success("successfully updated.");
                 }
 
@@ -168,6 +185,7 @@ export default {
                 const response = await axios.post("files/store", form, {
                     headers: {
                         "Content-Type": "multipart/form-data",
+                        Authorization: this.token,
                     },
                 });
 

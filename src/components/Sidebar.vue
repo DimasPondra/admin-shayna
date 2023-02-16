@@ -64,22 +64,50 @@
                 <span>Details</span>
             </router-link>
 
-            <a href="#" class="sidebar-item">
+            <button @click="logout" class="sidebar-item border-0">
                 <font-awesome-icon icon="fa-solid fa-arrow-right-from-bracket" />
                 <span>Logout</span>
-            </a>
+            </button>
         </aside>
     </div>
 </template>
 
 <script>
+import axios from "axios";
+import { useToast } from "vue-toastification";
+
 export default {
     props: {
         navbar: "",
     },
+    data() {
+        return {
+            token: "Bearer " + localStorage.getItem("token"),
+        };
+    },
     methods: {
         toggleNavbar() {
             this.$emit("closed", "close");
+        },
+        async logout() {
+            const toast = useToast();
+
+            try {
+                await axios.post("logout", "", {
+                    headers: {
+                        Authorization: this.token,
+                    },
+                });
+
+                toast.success("Logged out successfully.");
+                localStorage.removeItem("token");
+                this.$router.push("/login");
+            } catch (error) {
+                const data = error.response.data;
+                if (data.message != null) {
+                    toast.error(data.message);
+                }
+            }
         },
     },
 };

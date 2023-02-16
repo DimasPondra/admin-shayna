@@ -27,11 +27,16 @@ export default {
                 id: null,
                 name: "",
             },
+            token: "Bearer " + localStorage.getItem("token"),
         };
     },
     async created() {
         if (this.$route.params.id != undefined) {
-            const response = await axios.get(`product-categories/${this.$route.params.id}/show`);
+            const response = await axios.get(`product-categories/${this.$route.params.id}/show`, {
+                headers: {
+                    Authorization: this.token,
+                },
+            });
             const data = response.data.data;
 
             this.product_category.id = data.id;
@@ -44,11 +49,19 @@ export default {
 
             try {
                 if (this.product_category.id == null) {
-                    await axios.post("product-categories/store", this.product_category);
+                    await axios.post("product-categories/store", this.product_category, {
+                        headers: {
+                            Authorization: this.token,
+                        },
+                    });
 
                     toast.success("successfully created.");
                 } else {
-                    await axios.patch(`product-categories/${this.$route.params.id}/update`, this.product_category);
+                    await axios.patch(`product-categories/${this.$route.params.id}/update`, this.product_category, {
+                        headers: {
+                            Authorization: this.token,
+                        },
+                    });
 
                     toast.success("successfully updated.");
                 }

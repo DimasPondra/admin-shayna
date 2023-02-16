@@ -55,7 +55,7 @@ export default {
     },
     data() {
         return {
-            products: Array,
+            products: [],
             pagination: {
                 page: 1,
                 total: 0,
@@ -74,6 +74,7 @@ export default {
                 title: "Products",
                 link: null,
             },
+            token: "Bearer " + localStorage.getItem("token"),
         };
     },
     computed: {
@@ -102,6 +103,9 @@ export default {
 
             const response = await axios.get("products", {
                 params: this.params,
+                headers: {
+                    Authorization: this.token,
+                },
             });
             this.products = response.data.data;
 
@@ -111,7 +115,11 @@ export default {
         },
         async handleDelete(id) {
             try {
-                await axios.delete(`products/${id}/delete`);
+                await axios.delete(`products/${id}/delete`, {
+                    headers: {
+                        Authorization: this.token,
+                    },
+                });
                 this.loadData();
 
                 const toast = useToast();
