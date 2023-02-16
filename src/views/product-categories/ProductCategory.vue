@@ -23,68 +23,26 @@
                 </div>
 
                 <div class="col-12 search-menu mb-4">
-                    <form action="" method="GET">
-                        <div class="row d-flex">
-                            <div class="col-12 col-md-3 d-flex">
-                                <input
-                                    type="text"
-                                    class="form-control border-0 shadow-sm"
-                                    name="name"
-                                    v-model="search_name"
-                                    placeholder="Search name"
-                                />
-                            </div>
+                    <div class="row d-flex">
+                        <div class="col-12 col-md-3 d-flex">
+                            <input
+                                type="text"
+                                class="form-control border-0 shadow-sm"
+                                name="name"
+                                v-model="search_name"
+                                placeholder="Search name"
+                            />
                         </div>
-                    </form>
+                    </div>
                 </div>
 
                 <div class="col-12">
                     <div class="statistics-card">
                         <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Slug</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="product_category in product_categories" :key="product_category.id">
-                                        <td>{{ product_category.name }}</td>
-                                        <td>{{ product_category.slug }}</td>
-                                        <td width="10%">
-                                            <div class="dropdown">
-                                                <button
-                                                    class="btn btn-outline-primary dropdown-toggle"
-                                                    type="button"
-                                                    id="dropdownMenu"
-                                                    data-bs-toggle="dropdown"
-                                                    aria-expanded="false"
-                                                ></button>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                                    <li>
-                                                        <router-link
-                                                            :to="`/product-categories/${product_category.id}/edit`"
-                                                            class="btn btn-sm btn-link w-100 text-start"
-                                                            >Edit</router-link
-                                                        >
-                                                    </li>
-                                                    <li>
-                                                        <button
-                                                            onclick="return confirm('Are you sure to delete?')"
-                                                            @click="handleDelete(product_category.id)"
-                                                            class="btn btn-sm btn-link w-100 text-start"
-                                                        >
-                                                            Delete
-                                                        </button>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <TableProductCategory
+                                :product_categories="product_categories"
+                                @delete_product="handleDelete"
+                            />
 
                             <Pagination :pagination="pagination" @current_page="changePage" />
                         </div>
@@ -102,10 +60,12 @@ import "@popperjs/core";
 import "bootstrap/dist/js/bootstrap.bundle";
 import axios from "axios";
 import { useToast } from "vue-toastification";
+import TableProductCategory from "../../components/TableProductCategory.vue";
 import Pagination from "../../components/Pagination.vue";
 
 export default {
     components: {
+        TableProductCategory,
         Pagination,
     },
     data() {
@@ -151,18 +111,14 @@ export default {
         async loadData(value) {
             this.params.page = value != null ? value : this.params.page;
 
-            try {
-                const response = await axios.get("product-categories", {
-                    params: this.params,
-                });
-                this.product_categories = response.data.data;
+            const response = await axios.get("product-categories", {
+                params: this.params,
+            });
+            this.product_categories = response.data.data;
 
-                this.pagination.page = response.data.meta.current_page;
-                this.pagination.total = response.data.meta.total;
-                this.pagination.per_page = response.data.meta.per_page;
-            } catch (error) {
-                console.error(error);
-            }
+            this.pagination.page = response.data.meta.current_page;
+            this.pagination.total = response.data.meta.total;
+            this.pagination.per_page = response.data.meta.per_page;
         },
         async handleDelete(id) {
             try {
