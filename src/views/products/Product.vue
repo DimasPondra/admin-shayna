@@ -37,52 +37,7 @@
                 <div class="col-12">
                     <div class="statistics-card">
                         <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Slug</th>
-                                        <th>Price</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="product in products" :key="product.id">
-                                        <td>{{ product.name }}</td>
-                                        <td>{{ product.slug }}</td>
-                                        <td>{{ product.price }}</td>
-                                        <td width="10%">
-                                            <div class="dropdown">
-                                                <button
-                                                    class="btn btn-outline-primary dropdown-toggle"
-                                                    type="button"
-                                                    id="dropdownMenu"
-                                                    data-bs-toggle="dropdown"
-                                                    aria-expanded="false"
-                                                ></button>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                                    <li>
-                                                        <router-link
-                                                            :to="`/products/${product.id}/edit`"
-                                                            class="btn btn-sm btn-link w-100 text-start"
-                                                            >Edit</router-link
-                                                        >
-                                                    </li>
-                                                    <li>
-                                                        <button
-                                                            onclick="return confirm('Are you sure to delete?')"
-                                                            @click="handleDelete(product.id)"
-                                                            class="btn btn-sm btn-link w-100 text-start"
-                                                        >
-                                                            Delete
-                                                        </button>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <TableProduct :products="products" @delete_product="handleDelete" />
 
                             <Pagination :pagination="pagination" @current_page="changePage" />
                         </div>
@@ -100,10 +55,12 @@ import "@popperjs/core";
 import "bootstrap/dist/js/bootstrap.bundle";
 import axios from "axios";
 import { useToast } from "vue-toastification";
+import TableProduct from "../../components/TableProduct.vue";
 import Pagination from "../../components/Pagination.vue";
 
 export default {
     components: {
+        TableProduct,
         Pagination,
     },
     data() {

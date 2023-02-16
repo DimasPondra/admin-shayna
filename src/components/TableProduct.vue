@@ -4,13 +4,15 @@
             <tr>
                 <th>Name</th>
                 <th>Slug</th>
+                <th>Price</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            <tr v-for="product_category in product_categories" :key="product_category.id">
-                <td>{{ product_category.name }}</td>
-                <td>{{ product_category.slug }}</td>
+            <tr v-for="product in products" :key="product.id">
+                <td>{{ product.name }}</td>
+                <td>{{ product.slug }}</td>
+                <td>{{ product.price }}</td>
                 <td width="10%">
                     <div class="dropdown">
                         <button
@@ -23,7 +25,7 @@
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                             <li>
                                 <router-link
-                                    :to="`/product-categories/${product_category.id}/edit`"
+                                    :to="`/products/${product.id}/edit`"
                                     class="btn btn-sm btn-link w-100 text-start"
                                     >Edit</router-link
                                 >
@@ -31,7 +33,7 @@
                             <li>
                                 <button
                                     onclick="return confirm('Are you sure to delete?')"
-                                    @click="handleDelete(product_category.id)"
+                                    @click="handleDelete(product.id)"
                                     class="btn btn-sm btn-link w-100 text-start"
                                 >
                                     Delete
@@ -48,11 +50,11 @@
 <script>
 export default {
     props: {
-        product_categories: Array,
+        products: Array,
     },
     methods: {
         handleDelete(value) {
-            this.$emit("delete_category", value);
+            this.$emit("delete_product", value);
         },
     },
 };

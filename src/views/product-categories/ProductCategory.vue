@@ -41,7 +41,7 @@
                         <div class="table-responsive">
                             <TableProductCategory
                                 :product_categories="product_categories"
-                                @delete_product="handleDelete"
+                                @delete_category="handleDelete"
                             />
 
                             <Pagination :pagination="pagination" @current_page="changePage" />
