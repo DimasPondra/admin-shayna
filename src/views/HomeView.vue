@@ -1,29 +1,6 @@
 <template>
     <div class="col-12 col-xl-9">
-        <div class="nav">
-            <div class="d-flex justify-content-between align-items-center w-100 mb-3 mb-md-0">
-                <div class="d-flex justify-content-start align-items-center">
-                    <button id="toggle-navbar" @click="toggleNavbar()">
-                        <font-awesome-icon icon="fa-solid fa-bars" />
-                    </button>
-                    <h2 class="nav-title">Overview</h2>
-                </div>
-                <button class="btn-notif d-block d-md-none">
-                    <font-awesome-icon icon="fa-solid fa-bell" />
-                </button>
-            </div>
-
-            <div class="d-flex justify-content-between align-items-center nav-input-container">
-                <div class="nav-input-group">
-                    <input type="text" class="nav-input" placeholder="Search people, team, project" />
-                    <button class="btn-nav-input"><font-awesome-icon icon="fa-solid fa-magnifying-glass" /></button>
-                </div>
-
-                <button class="btn-notif d-none d-md-block">
-                    <font-awesome-icon icon="fa-solid fa-bell" />
-                </button>
-            </div>
-        </div>
+        <Navbar :navbar="navbar" @clicked="$emit('hide', 'open')" />
 
         <div class="content">
             <div class="row">
@@ -232,7 +209,20 @@
 </template>
 
 <script>
+import Navbar from "../components/Navbar.vue";
+
 export default {
+    components: {
+        Navbar,
+    },
+    data() {
+        return {
+            navbar: {
+                title: "Overview",
+                link: null,
+            },
+        };
+    },
     created() {
         document.title = `Admin Shayna - ${this.$route.meta.title}`;
     },
