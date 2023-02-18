@@ -28,6 +28,8 @@ import "vue-toastification/dist/index.css";
 
 import Pagination from "v-pagination-3";
 
+import { createPinia } from "pinia";
+
 library.add(
     faHouse,
     faTableList,
@@ -42,10 +44,12 @@ library.add(
 );
 
 const app = createApp(App);
+const pinia = createPinia();
 
 app.use(router);
 app.use(bootstrap);
 app.use(Toast);
+app.use(pinia);
 app.component("font-awesome-icon", FontAwesomeIcon);
 app.component("pagination", Pagination);
 

@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
 
 import ProductCategory from "./routes/product-categories";
 import Product from "./routes/products";
@@ -14,7 +13,7 @@ const router = createRouter({
         {
             path: "/",
             name: "home",
-            component: HomeView,
+            component: () => import("../views/HomeView.vue"),
             meta: {
                 title: "Dashboard",
                 name_page: "dashboard",

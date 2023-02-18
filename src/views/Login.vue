@@ -29,8 +29,8 @@
 </template>
 
 <script>
-import axios from "axios";
-import { useToast } from "vue-toastification";
+import { mapActions } from "pinia";
+import { useAuthStore } from "../stores/auth";
 
 export default {
     data() {
@@ -45,24 +45,9 @@ export default {
         document.title = `Admin Shayna - ${this.$route.meta.title}`;
     },
     methods: {
+        ...mapActions(useAuthStore, ["login"]),
         async handleSubmit() {
-            const toast = useToast();
-
-            try {
-                const response = await axios.post("login", this.credential);
-
-                await localStorage.setItem("token", response.data.access_token);
-
-                toast.success("welcome.");
-
-                this.clearForm();
-                this.$router.push("/");
-            } catch (error) {
-                const data = error.response.data;
-                if (data.message != null) {
-                    toast.error(data.message);
-                }
-            }
+            await this.login(this.credential);
         },
         clearForm() {
             this.credential.email = "";

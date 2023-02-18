@@ -46,6 +46,8 @@ import { useToast } from "vue-toastification";
 import Navbar from "../../components/Navbar.vue";
 import TableProduct from "../../components/TableProduct.vue";
 import Pagination from "../../components/Pagination.vue";
+import { mapState } from "pinia";
+import { useAuthStore } from "../../stores/auth";
 
 export default {
     components: {
@@ -74,7 +76,6 @@ export default {
                 title: "Products",
                 link: null,
             },
-            token: "Bearer " + localStorage.getItem("token"),
         };
     },
     computed: {
@@ -85,6 +86,7 @@ export default {
                 name: this.search.name,
             };
         },
+        ...mapState(useAuthStore, ["token"]),
     },
     watch: {
         search_name(value) {

@@ -19,6 +19,8 @@
 <script>
 import axios from "axios";
 import { useToast } from "vue-toastification";
+import { mapState } from "pinia";
+import { useAuthStore } from "../stores/auth";
 
 export default {
     data() {
@@ -27,8 +29,10 @@ export default {
                 id: null,
                 name: "",
             },
-            token: "Bearer " + localStorage.getItem("token"),
         };
+    },
+    computed: {
+        ...mapState(useAuthStore, ["token"]),
     },
     async created() {
         if (this.$route.params.id != undefined) {

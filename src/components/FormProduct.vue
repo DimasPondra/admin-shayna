@@ -76,6 +76,8 @@
 <script>
 import axios from "axios";
 import { useToast } from "vue-toastification";
+import { mapState } from "pinia";
+import { useAuthStore } from "../stores/auth";
 
 export default {
     data() {
@@ -94,8 +96,10 @@ export default {
             },
             folder_name: "products",
             product_categories: [],
-            token: "Bearer " + localStorage.getItem("token"),
         };
+    },
+    computed: {
+        ...mapState(useAuthStore, ["token"]),
     },
     created() {
         this.loadProductCategories();
