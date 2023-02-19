@@ -2,6 +2,12 @@ import { defineStore } from "pinia";
 import axios from "axios";
 import { useToast } from "vue-toastification";
 import router from "../router";
+import SecureLS from "secure-ls";
+
+const secureLS = new SecureLS({
+    encodingType: "aes",
+    encryptionSecret: "oktafianto",
+});
 
 export const useAuthStore = defineStore("auth", {
     state: () => ({
@@ -44,6 +50,14 @@ export const useAuthStore = defineStore("auth", {
                     toast.error(data.message);
                 }
             }
+        },
+    },
+    persist: {
+        key: "token",
+        paths: ["token"],
+        storage: {
+            getItem: (key) => secureLS.get(key),
+            setItem: (key, value) => secureLS.set(key, value),
         },
     },
 });

@@ -29,6 +29,7 @@ import "vue-toastification/dist/index.css";
 import Pagination from "v-pagination-3";
 
 import { createPinia } from "pinia";
+import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 
 library.add(
     faHouse,
@@ -45,6 +46,7 @@ library.add(
 
 const app = createApp(App);
 const pinia = createPinia();
+pinia.use(piniaPluginPersistedstate);
 
 app.use(router);
 app.use(bootstrap);
