@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import ProductCategory from "./routes/product-categories";
 import Product from "./routes/products";
 import Bank from "./routes/banks";
+import BankAccount from "./routes/bank-accounts";
 
 import VueRouteMiddleware from "vue-route-middleware";
 import AuthMiddleware from "../middleware/auth";
@@ -64,6 +65,7 @@ const router = createRouter({
         ...ProductCategory,
         ...Product,
         ...Bank,
+        ...BankAccount,
     ],
 });
 

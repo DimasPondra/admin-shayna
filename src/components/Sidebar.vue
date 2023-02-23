@@ -30,6 +30,15 @@
                 <span>Bank</span>
             </router-link>
 
+            <router-link
+                to="/bank-accounts"
+                class="sidebar-item"
+                :class="this.$route.meta.name_page == 'bank-accounts' ? 'active' : ''"
+            >
+                <font-awesome-icon icon="fa-solid fa-note-sticky" />
+                <span>Bank Account</span>
+            </router-link>
+
             <h5 class="sidebar-title">Products</h5>
 
             <router-link
