@@ -19,6 +19,17 @@
                 <span>Overview</span>
             </router-link>
 
+            <h5 class="sidebar-title">Banks</h5>
+
+            <router-link
+                to="/banks"
+                class="sidebar-item"
+                :class="this.$route.meta.name_page == 'banks' ? 'active' : ''"
+            >
+                <font-awesome-icon icon="fa-solid fa-note-sticky" />
+                <span>Bank</span>
+            </router-link>
+
             <h5 class="sidebar-title">Products</h5>
 
             <router-link

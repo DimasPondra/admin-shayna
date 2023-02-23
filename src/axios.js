@@ -1,3 +1,3 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "https://shayna-backend-api.dimasoktafianto.my.id/api/";
+axios.defaults.baseURL = "http://shayna-backend-api.test/api/admin/";
