@@ -26,7 +26,7 @@
                 class="sidebar-item"
                 :class="this.$route.meta.name_page == 'banks' ? 'active' : ''"
             >
-                <font-awesome-icon icon="fa-solid fa-note-sticky" />
+                <font-awesome-icon icon="fa-solid fa-building-columns" />
                 <span>Bank</span>
             </router-link>
 
@@ -35,7 +35,7 @@
                 class="sidebar-item"
                 :class="this.$route.meta.name_page == 'bank-accounts' ? 'active' : ''"
             >
-                <font-awesome-icon icon="fa-solid fa-note-sticky" />
+                <font-awesome-icon icon="fa-solid fa-money-check-dollar" />
                 <span>Bank Account</span>
             </router-link>
 
@@ -46,7 +46,7 @@
                 class="sidebar-item"
                 :class="this.$route.meta.name_page == 'product-categories' ? 'active' : ''"
             >
-                <font-awesome-icon icon="fa-solid fa-note-sticky" />
+                <font-awesome-icon icon="fa-solid fa-list" />
                 <span>Product Category</span>
             </router-link>
 
@@ -55,7 +55,7 @@
                 class="sidebar-item"
                 :class="this.$route.meta.name_page == 'products' ? 'active' : ''"
             >
-                <font-awesome-icon icon="fa-solid fa-note-sticky" />
+                <font-awesome-icon icon="fa-solid fa-shirt" />
                 <span>Product</span>
             </router-link>
 
@@ -66,7 +66,7 @@
                 class="sidebar-item"
                 :class="this.$route.meta.name_page == 'transactions' ? 'active' : ''"
             >
-                <font-awesome-icon icon="fa-solid fa-note-sticky" />
+                <font-awesome-icon icon="fa-solid fa-receipt" />
                 <span>Transaction</span>
             </router-link>
 
@@ -77,7 +77,7 @@
                 class="sidebar-item"
                 :class="this.$route.meta.name_page == 'users' ? 'active' : ''"
             >
-                <font-awesome-icon icon="fa-solid fa-note-sticky" />
+                <font-awesome-icon icon="fa-solid fa-user" />
                 <span>User</span>
             </router-link>
 

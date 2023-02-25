@@ -17,6 +17,12 @@ import {
     faBars,
     faUserCheck,
     faClose,
+    faUser,
+    faReceipt,
+    faBuildingColumns,
+    faMoneyCheckDollar,
+    faShirt,
+    faList,
 } from "@fortawesome/free-solid-svg-icons";
 
 import "./assets/css/main.css";
@@ -41,7 +47,13 @@ library.add(
     faBell,
     faBars,
     faUserCheck,
-    faClose
+    faClose,
+    faUser,
+    faReceipt,
+    faBuildingColumns,
+    faMoneyCheckDollar,
+    faShirt,
+    faList
 );
 
 const app = createApp(App);
