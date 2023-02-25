@@ -4,6 +4,7 @@ import ProductCategory from "./routes/product-categories";
 import Product from "./routes/products";
 import Bank from "./routes/banks";
 import BankAccount from "./routes/bank-accounts";
+import User from "./routes/users";
 
 import VueRouteMiddleware from "vue-route-middleware";
 import AuthMiddleware from "../middleware/auth";
@@ -66,6 +67,7 @@ const router = createRouter({
         ...Product,
         ...Bank,
         ...BankAccount,
+        ...User,
     ],
 });
 

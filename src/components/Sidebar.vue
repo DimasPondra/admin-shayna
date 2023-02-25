@@ -59,6 +59,17 @@
                 <span>Product</span>
             </router-link>
 
+            <h5 class="sidebar-title">Users</h5>
+
+            <router-link
+                to="/users"
+                class="sidebar-item"
+                :class="this.$route.meta.name_page == 'users' ? 'active' : ''"
+            >
+                <font-awesome-icon icon="fa-solid fa-note-sticky" />
+                <span>User</span>
+            </router-link>
+
             <h5 class="sidebar-title">Others</h5>
 
             <router-link to="/form" class="sidebar-item" :class="this.$route.meta.name_page == 'form' ? 'active' : ''">
