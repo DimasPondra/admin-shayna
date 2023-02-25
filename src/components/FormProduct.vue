@@ -36,6 +36,7 @@
                                 v-for="product_category in product_categories"
                                 :key="product_category.id"
                                 :value="product_category.id"
+                                :selected="product.product_category_id == product_category.id"
                             >
                                 {{ product_category.name }}
                             </option>
@@ -99,6 +100,11 @@ export default {
         };
     },
     computed: {
+        params: function () {
+            return {
+                include: "category,file",
+            };
+        },
         ...mapState(useAuthStore, ["token"]),
     },
     created() {
@@ -109,6 +115,7 @@ export default {
         async loadProduct() {
             if (this.$route.params.id != undefined) {
                 const response = await axios.get(`products/${this.$route.params.id}/show`, {
+                    params: this.params,
                     headers: {
                         Authorization: this.token,
                     },
@@ -119,9 +126,9 @@ export default {
                 this.product.name = data.name;
                 this.product.description = data.description;
                 this.product.price = parseInt(data.price);
-                this.product.product_category_id = data.product_category_id;
-                this.product.file_id = data.file_id;
-                this.file.url = data.file_url;
+                this.product.product_category_id = data.category.id;
+                this.product.file_id = data.file.id;
+                this.file.url = data.file.url;
             }
         },
         async loadProductCategories() {
