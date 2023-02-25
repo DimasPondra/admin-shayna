@@ -59,6 +59,17 @@
                 <span>Product</span>
             </router-link>
 
+            <h5 class="sidebar-title">Transactions</h5>
+
+            <router-link
+                to="/transactions"
+                class="sidebar-item"
+                :class="this.$route.meta.name_page == 'transactions' ? 'active' : ''"
+            >
+                <font-awesome-icon icon="fa-solid fa-note-sticky" />
+                <span>Transaction</span>
+            </router-link>
+
             <h5 class="sidebar-title">Users</h5>
 
             <router-link
