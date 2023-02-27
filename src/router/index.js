@@ -24,36 +24,36 @@ const router = createRouter({
                 middleware: [AuthMiddleware],
             },
         },
-        {
-            path: "/form",
-            name: "form",
-            component: () => import("../views/Form.vue"),
-            meta: {
-                title: "Form",
-                name_page: "form",
-                middleware: [AuthMiddleware],
-            },
-        },
-        {
-            path: "/table",
-            name: "table",
-            component: () => import("../views/Table.vue"),
-            meta: {
-                title: "Table",
-                name_page: "table",
-                middleware: [AuthMiddleware],
-            },
-        },
-        {
-            path: "/detail",
-            name: "detail",
-            component: () => import("../views/Detail.vue"),
-            meta: {
-                title: "Detail",
-                name_page: "detail",
-                middleware: [AuthMiddleware],
-            },
-        },
+        // {
+        //     path: "/form",
+        //     name: "form",
+        //     component: () => import("../views/Form.vue"),
+        //     meta: {
+        //         title: "Form",
+        //         name_page: "form",
+        //         middleware: [AuthMiddleware],
+        //     },
+        // },
+        // {
+        //     path: "/table",
+        //     name: "table",
+        //     component: () => import("../views/Table.vue"),
+        //     meta: {
+        //         title: "Table",
+        //         name_page: "table",
+        //         middleware: [AuthMiddleware],
+        //     },
+        // },
+        // {
+        //     path: "/detail",
+        //     name: "detail",
+        //     component: () => import("../views/Detail.vue"),
+        //     meta: {
+        //         title: "Detail",
+        //         name_page: "detail",
+        //         middleware: [AuthMiddleware],
+        //     },
+        // },
         {
             path: "/login",
             name: "login",

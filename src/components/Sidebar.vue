@@ -83,29 +83,6 @@
 
             <h5 class="sidebar-title">Others</h5>
 
-            <router-link to="/form" class="sidebar-item" :class="this.$route.meta.name_page == 'form' ? 'active' : ''">
-                <font-awesome-icon icon="fa-solid fa-note-sticky" />
-                <span>Form</span>
-            </router-link>
-
-            <router-link
-                to="/table"
-                class="sidebar-item"
-                :class="this.$route.meta.name_page == 'table' ? 'active' : ''"
-            >
-                <font-awesome-icon icon="fa-solid fa-table-list" />
-                <span>Table</span>
-            </router-link>
-
-            <router-link
-                to="/detail"
-                class="sidebar-item"
-                :class="this.$route.meta.name_page == 'detail' ? 'active' : ''"
-            >
-                <font-awesome-icon icon="fa-solid fa-file-lines" />
-                <span>Details</span>
-            </router-link>
-
             <button @click="handleLogout" class="sidebar-item border-0">
                 <font-awesome-icon icon="fa-solid fa-arrow-right-from-bracket" />
                 <span>Logout</span>
