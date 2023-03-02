@@ -29,7 +29,11 @@
                 <div class="col-12">
                     <div class="statistics-card">
                         <div class="table-responsive">
-                            <TableBankAccount :bank_accounts="bank_accounts" @delete_bank_account="handleDelete" />
+                            <TableBankAccount
+                                :bank_accounts="bank_accounts"
+                                @delete_bank_account="handleDelete"
+                                @change_status="handleChangeStatus"
+                            />
 
                             <Pagination :pagination="pagination" @current_page="changePage" />
                         </div>
@@ -135,6 +139,26 @@ export default {
         },
         changePage(value) {
             this.loadData(value);
+        },
+        async handleChangeStatus(id) {
+            try {
+                await axios.patch(
+                    `bank_accounts/${id}/change-status`,
+                    {},
+                    {
+                        headers: {
+                            Authorization: this.token,
+                        },
+                    }
+                );
+                this.loadData();
+
+                const toast = useToast();
+                toast.success("successfully updated.");
+            } catch (error) {
+                const toast = useToast();
+                toast.error(error.response.data.message);
+            }
         },
     },
 };

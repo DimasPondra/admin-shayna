@@ -4,6 +4,7 @@
             <tr>
                 <th>Name</th>
                 <th>Number</th>
+                <th>Status</th>
                 <th>Bank</th>
                 <th>Action</th>
             </tr>
@@ -12,6 +13,7 @@
             <tr v-for="bank_account in bank_accounts" :key="bank_account.id">
                 <td>{{ bank_account.name }}</td>
                 <td>{{ bank_account.number }}</td>
+                <td>{{ bank_account.status }}</td>
                 <td>{{ bank_account.bank.name }}</td>
                 <td width="10%">
                     <div class="dropdown">
@@ -29,6 +31,14 @@
                                     class="btn btn-sm btn-link w-100 text-start"
                                     >Edit</router-link
                                 >
+                            </li>
+                            <li v-if="bank_account.status == 'inactive'">
+                                <button
+                                    @click="handleChangeStatus(bank_account.id)"
+                                    class="btn btn-sm btn-link w-100 text-start"
+                                >
+                                    Change To Active
+                                </button>
                             </li>
                             <li>
                                 <button
@@ -55,6 +65,9 @@ export default {
     methods: {
         handleDelete(value) {
             this.$emit("delete_bank_account", value);
+        },
+        handleChangeStatus(value) {
+            this.$emit("change_status", value);
         },
     },
 };
