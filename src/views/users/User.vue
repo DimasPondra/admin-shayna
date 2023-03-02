@@ -40,7 +40,6 @@
 import "@popperjs/core";
 import "bootstrap/dist/js/bootstrap.bundle";
 import axios from "axios";
-import { useToast } from "vue-toastification";
 import Navbar from "../../components/Navbar.vue";
 import TableUser from "../../components/TableUser.vue";
 import Pagination from "../../components/Pagination.vue";
