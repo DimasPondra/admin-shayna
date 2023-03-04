@@ -67,6 +67,9 @@
                                 </table>
                             </div>
                         </div>
+                        <div class="row" v-show="transaction.status === 'pending'">
+                            <FormStatusTransaction />
+                        </div>
                     </div>
                 </div>
 
@@ -107,10 +110,12 @@ import Navbar from "../../components/Navbar.vue";
 import axios from "axios";
 import { mapState } from "pinia";
 import { useAuthStore } from "../../stores/auth";
+import FormStatusTransaction from "../../components/FormStatusTransaction.vue";
 
 export default {
     components: {
         Navbar,
+        FormStatusTransaction,
     },
     data() {
         return {
