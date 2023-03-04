@@ -76,7 +76,7 @@ export default {
     },
     async created() {
         if (this.$route.params.id != undefined) {
-            const response = await axios.get(`bank_accounts/${this.$route.params.id}/show`, {
+            const response = await axios.get(`bank-accounts/${this.$route.params.id}/show`, {
                 params: this.params,
                 headers: {
                     Authorization: this.token,
@@ -97,7 +97,7 @@ export default {
 
             try {
                 if (this.bankAccount.id == null) {
-                    await axios.post("bank_accounts/store", this.bankAccount, {
+                    await axios.post("bank-accounts/store", this.bankAccount, {
                         headers: {
                             Authorization: this.token,
                         },
@@ -105,7 +105,7 @@ export default {
 
                     toast.success("successfully created.");
                 } else {
-                    await axios.patch(`bank_accounts/${this.$route.params.id}/update`, this.bankAccount, {
+                    await axios.patch(`bank-accounts/${this.$route.params.id}/update`, this.bankAccount, {
                         headers: {
                             Authorization: this.token,
                         },

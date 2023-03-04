@@ -110,7 +110,7 @@ export default {
         async loadData(value) {
             this.params.page = value != null ? value : this.params.page;
 
-            const response = await axios.get("bank_accounts", {
+            const response = await axios.get("bank-accounts", {
                 params: this.params,
                 headers: {
                     Authorization: this.token,
@@ -124,7 +124,7 @@ export default {
         },
         async handleDelete(id) {
             try {
-                await axios.delete(`bank_accounts/${id}/delete`, {
+                await axios.delete(`bank-accounts/${id}/delete`, {
                     headers: {
                         Authorization: this.token,
                     },
@@ -143,7 +143,7 @@ export default {
         async handleChangeStatus(id) {
             try {
                 await axios.patch(
-                    `bank_accounts/${id}/change-status`,
+                    `bank-accounts/${id}/change-status`,
                     {},
                     {
                         headers: {
