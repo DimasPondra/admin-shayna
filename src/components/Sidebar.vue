@@ -39,6 +39,17 @@
                 <span>Bank Account</span>
             </router-link>
 
+            <h5 class="sidebar-title">Banners</h5>
+
+            <router-link
+                to="/banners"
+                class="sidebar-item"
+                :class="this.$route.meta.name_page == 'banners' ? 'active' : ''"
+            >
+                <font-awesome-icon icon="fa-solid fa-images" />
+                <span>Banner</span>
+            </router-link>
+
             <h5 class="sidebar-title">Products</h5>
 
             <router-link

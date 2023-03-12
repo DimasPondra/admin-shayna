@@ -6,6 +6,7 @@ import Bank from "./routes/banks";
 import BankAccount from "./routes/bank-accounts";
 import User from "./routes/users";
 import Transaction from "./routes/transactions";
+import Banner from "./routes/banners";
 
 import VueRouteMiddleware from "vue-route-middleware";
 import AuthMiddleware from "../middleware/auth";
@@ -70,6 +71,7 @@ const router = createRouter({
         ...BankAccount,
         ...User,
         ...Transaction,
+        ...Banner,
     ],
 });
 

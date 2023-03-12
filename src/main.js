@@ -23,6 +23,7 @@ import {
     faMoneyCheckDollar,
     faShirt,
     faList,
+    faImages,
 } from "@fortawesome/free-solid-svg-icons";
 
 import "./assets/css/main.css";
@@ -53,7 +54,8 @@ library.add(
     faBuildingColumns,
     faMoneyCheckDollar,
     faShirt,
-    faList
+    faList,
+    faImages
 );
 
 const app = createApp(App);
