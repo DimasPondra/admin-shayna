@@ -17,67 +17,27 @@
 </template>
 
 <script>
-import axios from "axios";
-import { useToast } from "vue-toastification";
-import { mapState } from "pinia";
-import { useAuthStore } from "../stores/auth";
+import { mapActions, mapState } from "pinia";
+import { useBankStore } from "../stores/banks";
 
 export default {
-    data() {
-        return {
-            bank: {
-                id: null,
-                name: "",
-            },
-        };
-    },
     computed: {
-        ...mapState(useAuthStore, ["token"]),
+        ...mapState(useBankStore, ["bank"]),
     },
     async created() {
         if (this.$route.params.id != undefined) {
-            const response = await axios.get(`banks/${this.$route.params.id}/show`, {
-                headers: {
-                    Authorization: this.token,
-                },
-            });
-            const data = response.data.data;
-
-            this.bank.id = data.id;
-            this.bank.name = data.name;
+            this.loadBank();
         }
     },
     methods: {
+        ...mapActions(useBankStore, ["show", "save"]),
+        async loadBank() {
+            await this.show(this.$route.params.id);
+        },
         async handleSubmit() {
-            const toast = useToast();
+            await this.save(this.bank, this.$route.params.id);
 
-            try {
-                if (this.bank.id == null) {
-                    await axios.post("banks/store", this.bank, {
-                        headers: {
-                            Authorization: this.token,
-                        },
-                    });
-
-                    toast.success("successfully created.");
-                } else {
-                    await axios.patch(`banks/${this.$route.params.id}/update`, this.bank, {
-                        headers: {
-                            Authorization: this.token,
-                        },
-                    });
-
-                    toast.success("successfully updated.");
-                }
-
-                this.clearForm();
-                this.$router.push("/banks");
-            } catch (error) {
-                const data = error.response.data;
-                if (data.message != null) {
-                    toast.error(data.message);
-                }
-            }
+            this.clearForm();
         },
         clearForm() {
             this.bank.id = null;
