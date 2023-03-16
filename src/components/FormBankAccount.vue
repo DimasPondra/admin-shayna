@@ -6,7 +6,7 @@
                     Name
                     <span class="required">*</span>
                 </label>
-                <input type="text" class="form-control" id="name" v-model="bankAccount.name" />
+                <input type="text" class="form-control" id="name" v-model="bank_account.name" />
             </div>
 
             <div class="row">
@@ -16,7 +16,7 @@
                             Number
                             <span class="required">*</span>
                         </label>
-                        <input type="text" class="form-control" id="number" v-model="bankAccount.number" />
+                        <input type="text" class="form-control" id="number" v-model="bank_account.number" />
                     </div>
                 </div>
 
@@ -26,13 +26,13 @@
                             Bank
                             <span class="required">*</span>
                         </label>
-                        <select v-model="bankAccount.bank_id" id="bank" class="form-select">
+                        <select v-model="bank_account.bank_id" id="bank" class="form-select">
                             <option value="" disabled selected>Open this select menu</option>
                             <option
                                 v-for="bank in banks"
                                 :key="bank.id"
                                 :value="bank.id"
-                                :selected="bankAccount.bank_id == bank.id"
+                                :selected="bank_account.bank_id == bank.id"
                             >
                                 {{ bank.name }}
                             </option>
@@ -51,90 +51,41 @@
 <script>
 import axios from "axios";
 import { useToast } from "vue-toastification";
-import { mapState } from "pinia";
-import { useAuthStore } from "../stores/auth";
+
+import { mapActions, mapState } from "pinia";
+import { useBankStore } from "../stores/banks";
+import { useBankAccountStore } from "../stores/bank-accounts";
 
 export default {
-    data() {
-        return {
-            bankAccount: {
-                id: null,
-                name: "",
-                number: "",
-                bank_id: 0,
-            },
-            banks: [],
-        };
-    },
     computed: {
+        ...mapState(useBankStore, ["banks"]),
+        ...mapState(useBankAccountStore, ["bank_account"]),
         params: function () {
             return {
                 include: "bank",
             };
         },
-        ...mapState(useAuthStore, ["token"]),
     },
     async created() {
-        if (this.$route.params.id != undefined) {
-            const response = await axios.get(`bank-accounts/${this.$route.params.id}/show`, {
-                params: this.params,
-                headers: {
-                    Authorization: this.token,
-                },
-            });
-            const data = response.data.data;
-
-            this.bankAccount.id = data.id;
-            this.bankAccount.name = data.name;
-            this.bankAccount.number = data.number;
-            this.bankAccount.bank_id = data.bank.id;
-        }
         this.loadBanks();
+        if (this.$route.params.id != undefined) {
+            this.loadBankAccount();
+        }
     },
     methods: {
+        ...mapActions(useBankStore, ["get"]),
+        ...mapActions(useBankAccountStore, ["show", "save"]),
+        async loadBanks() {
+            await this.get();
+        },
+        async loadBankAccount() {
+            await this.show(this.$route.params.id, this.params);
+        },
         async handleSubmit() {
-            const toast = useToast();
-
-            try {
-                if (this.bankAccount.id == null) {
-                    await axios.post("bank-accounts/store", this.bankAccount, {
-                        headers: {
-                            Authorization: this.token,
-                        },
-                    });
-
-                    toast.success("successfully created.");
-                } else {
-                    await axios.patch(`bank-accounts/${this.$route.params.id}/update`, this.bankAccount, {
-                        headers: {
-                            Authorization: this.token,
-                        },
-                    });
-
-                    toast.success("successfully updated.");
-                }
-
-                this.clearForm();
-                this.$router.push("/bank-accounts");
-            } catch (error) {
-                const data = error.response.data;
-                if (data.message != null) {
-                    toast.error(data.message);
-                }
-            }
+            await this.save(this.bank_account, this.$route.params.id);
         },
         clearForm() {
-            this.bankAccount.id = null;
-            this.bankAccount.name = "";
-        },
-        async loadBanks() {
-            const response = await axios.get("banks", {
-                headers: {
-                    Authorization: this.token,
-                },
-            });
-
-            this.banks = response.data.data;
+            this.bank_account = {};
         },
     },
 };
