@@ -49,9 +49,6 @@
 </template>
 
 <script>
-import axios from "axios";
-import { useToast } from "vue-toastification";
-
 import { mapActions, mapState } from "pinia";
 import { useBankStore } from "../stores/banks";
 import { useBankAccountStore } from "../stores/bank-accounts";

@@ -40,8 +40,7 @@ export default {
             this.clearForm();
         },
         clearForm() {
-            this.bank.id = null;
-            this.bank.name = "";
+            this.bank = {};
         },
     },
 };

@@ -23,7 +23,7 @@
                 ></textarea>
             </div>
 
-            <div v-if="file.url != ''">
+            <div v-if="file.id != null">
                 <img :src="file.url" alt="image-blog" width="150" class="rounded" />
             </div>
 
@@ -43,91 +43,24 @@
 </template>
 
 <script>
-import axios from "axios";
-import { useToast } from "vue-toastification";
-import { mapState } from "pinia";
-import { useAuthStore } from "../stores/auth";
+import { mapActions, mapState } from "pinia";
+import { useFileStore } from "../stores/files";
+import { useBannerStore } from "../stores/banners";
 
 export default {
-    data() {
-        return {
-            banner: {
-                id: null,
-                name: "",
-                description: "",
-                file_id: null,
-            },
-            file: {
-                id: null,
-                url: "",
-            },
-            folder_name: "banners",
-        };
-    },
     computed: {
-        params: function () {
-            return {
-                include: "file",
-            };
-        },
-        ...mapState(useAuthStore, ["token"]),
-    },
-    created() {
-        this.loadProduct();
+        ...mapState(useBannerStore, ["banner"]),
+        ...mapState(useFileStore, ["file"]),
     },
     methods: {
-        async loadProduct() {
-            if (this.$route.params.id != undefined) {
-                const response = await axios.get(`banners/${this.$route.params.id}/show`, {
-                    params: this.params,
-                    headers: {
-                        Authorization: this.token,
-                    },
-                });
-                const data = response.data.data;
-
-                this.banner.id = data.id;
-                this.banner.name = data.name;
-                this.banner.description = data.description;
-                this.banner.file_id = data.file.id;
-                this.file.url = data.file.url;
-            }
-        },
+        ...mapActions(useFileStore, ["upload"]),
+        ...mapActions(useBannerStore, ["save"]),
         async handleSubmit() {
-            const toast = useToast();
+            await this.save(this.banner);
 
-            try {
-                if (this.banner.id == null) {
-                    await axios.post("banners/store", this.banner, {
-                        headers: {
-                            Authorization: this.token,
-                        },
-                    });
-
-                    toast.success("successfully created.");
-                }
-
-                this.clearForm();
-                this.$router.push("/banners");
-            } catch (error) {
-                const data = error.response.data;
-                if (data.message != null) {
-                    toast.error(data.message);
-                }
-            }
-        },
-        clearForm() {
-            this.banner.id = null;
-            this.banner.name = "";
-            this.banner.description = "";
-            this.banner.file_id = null;
-
-            this.file.id = null;
-            this.file.url = "";
+            this.clearForm();
         },
         async handleUpload(event) {
-            const toast = useToast();
-
             let form = new FormData();
             let file = event.target.files;
 
@@ -135,23 +68,14 @@ export default {
                 form.append(`files[${i}]`, file[i]);
             }
 
-            form.append("folder_name", this.folder_name);
+            form.append("folder_name", "banners");
 
-            try {
-                const response = await axios.post("files/store", form, {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                        Authorization: this.token,
-                    },
-                });
-
-                this.file = response.data.data[0];
-                this.banner.file_id = this.file.id;
-
-                toast.success("image successfully uploaded.");
-            } catch (error) {
-                console.log(error);
-            }
+            await this.upload(form);
+            this.banner.file_id = await this.file.id;
+        },
+        clearForm() {
+            this.banner = {};
+            this.file = {};
         },
     },
 };

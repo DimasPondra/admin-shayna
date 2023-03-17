@@ -28,13 +28,13 @@
 <script>
 import "@popperjs/core";
 import "bootstrap/dist/js/bootstrap.bundle";
-import axios from "axios";
-import { useToast } from "vue-toastification";
+
 import Navbar from "../../components/Navbar.vue";
 import TableBanner from "../../components/TableBanner.vue";
 import Pagination from "../../components/Pagination.vue";
-import { mapState } from "pinia";
-import { useAuthStore } from "../../stores/auth";
+
+import { mapActions, mapState } from "pinia";
+import { useBannerStore } from "../../stores/banners";
 
 export default {
     components: {
@@ -44,17 +44,6 @@ export default {
     },
     data() {
         return {
-            banners: [],
-            pagination: {
-                page: 1,
-                total: 0,
-                per_page: 5,
-                option: {
-                    chunk: 3,
-                    chunksNavigation: "scroll",
-                    hideCount: true,
-                },
-            },
             navbar: {
                 title: "Banners",
                 link: null,
@@ -62,56 +51,32 @@ export default {
         };
     },
     computed: {
+        ...mapState(useBannerStore, ["banners", "pagination"]),
         params: function () {
             return {
-                page: this.pagination.page,
-                per_page: this.pagination.per_page,
+                page: 1,
+                per_page: 5,
                 include: "file",
             };
         },
-        ...mapState(useAuthStore, ["token"]),
     },
     created() {
-        this.loadData();
         document.title = `Admin Shayna - ${this.$route.meta.title}`;
+        this.loadBanners();
     },
     methods: {
-        async loadData(value) {
+        ...mapActions(useBannerStore, ["get", "delete"]),
+        async loadBanners(value) {
             this.params.page = value != null ? value : this.params.page;
 
-            const response = await axios.get("banners", {
-                params: this.params,
-                headers: {
-                    Authorization: this.token,
-                },
-            });
-            this.banners = response.data.data;
-
-            this.pagination.page = response.data.meta.current_page;
-            this.pagination.total = response.data.meta.total;
-            this.pagination.per_page = response.data.meta.per_page;
+            await this.get(this.params);
+        },
+        async changePage(value) {
+            await this.loadBanners(value);
         },
         async handleDelete(id) {
-            const toast = useToast();
-
-            try {
-                await axios.delete(`banners/${id}/delete`, {
-                    headers: {
-                        Authorization: this.token,
-                    },
-                });
-
-                this.loadData();
-                toast.success("successfully deleted.");
-            } catch (error) {
-                const data = error.response.data;
-                if (data.message != null) {
-                    toast.error(data.message);
-                }
-            }
-        },
-        changePage(value) {
-            this.loadData(value);
+            await this.delete(id);
+            await this.loadBanners();
         },
     },
 };
