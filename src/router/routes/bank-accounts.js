@@ -27,7 +27,7 @@ export default [
         component: () => import("../../views/bank-accounts/EditBankAccount.vue"),
         meta: {
             title: "Edit Bank Account",
-            name_page: "banks",
+            name_page: "bank-accounts",
             middleware: [AuthMiddleware],
         },
     },
