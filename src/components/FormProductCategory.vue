@@ -17,71 +17,25 @@
 </template>
 
 <script>
-import axios from "axios";
-import { useToast } from "vue-toastification";
-import { mapState } from "pinia";
-import { useAuthStore } from "../stores/auth";
+import { mapActions, mapState } from "pinia";
+import { useProductCategoryStore } from "../stores/product-categories";
 
 export default {
-    data() {
-        return {
-            product_category: {
-                id: null,
-                name: "",
-            },
-        };
-    },
     computed: {
-        ...mapState(useAuthStore, ["token"]),
+        ...mapState(useProductCategoryStore, ["product_category"]),
     },
     async created() {
         if (this.$route.params.id != undefined) {
-            const response = await axios.get(`product-categories/${this.$route.params.id}/show`, {
-                headers: {
-                    Authorization: this.token,
-                },
-            });
-            const data = response.data.data;
-
-            this.product_category.id = data.id;
-            this.product_category.name = data.name;
+            this.loadProductCategory();
         }
     },
     methods: {
-        async handleSubmit() {
-            const toast = useToast();
-
-            try {
-                if (this.product_category.id == null) {
-                    await axios.post("product-categories/store", this.product_category, {
-                        headers: {
-                            Authorization: this.token,
-                        },
-                    });
-
-                    toast.success("successfully created.");
-                } else {
-                    await axios.patch(`product-categories/${this.$route.params.id}/update`, this.product_category, {
-                        headers: {
-                            Authorization: this.token,
-                        },
-                    });
-
-                    toast.success("successfully updated.");
-                }
-
-                this.clearForm();
-                this.$router.push("/product-categories");
-            } catch (error) {
-                const data = error.response.data;
-                if (data.message != null) {
-                    toast.error(data.message);
-                }
-            }
+        ...mapActions(useProductCategoryStore, ["show", "save"]),
+        async loadProductCategory() {
+            await this.show(this.$route.params.id);
         },
-        clearForm() {
-            this.product_category.id = null;
-            this.product_category.name = "";
+        async handleSubmit() {
+            await this.save(this.product_category, this.$route.params.id);
         },
     },
 };
