@@ -8,6 +8,7 @@ export const useBankStore = defineStore("banks", {
     state: () => ({
         banks: [],
         bank: {
+            id: null,
             name: "",
         },
         pagination: {
@@ -23,6 +24,7 @@ export const useBankStore = defineStore("banks", {
     }),
     actions: {
         async get(params) {
+            this.clear();
             const auth = useAuthStore();
 
             const res = await axios.get("banks", {
@@ -41,6 +43,7 @@ export const useBankStore = defineStore("banks", {
             }
         },
         async show(id) {
+            this.clear();
             const auth = useAuthStore();
 
             const res = await axios.get(`banks/${id}/show`, {
@@ -74,6 +77,7 @@ export const useBankStore = defineStore("banks", {
                     toast.success("successfully updated.");
                 }
 
+                this.clear();
                 router.push("/banks");
             } catch (error) {
                 const data = error.response.data;
@@ -97,6 +101,10 @@ export const useBankStore = defineStore("banks", {
             } catch (error) {
                 console.log(error);
             }
+        },
+        clear() {
+            this.bank.id = null;
+            this.bank.name = "";
         },
     },
 });

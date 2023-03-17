@@ -8,6 +8,7 @@ export const useBankAccountStore = defineStore("bank-accounts", {
     state: () => ({
         bank_accounts: [],
         bank_account: {
+            id: null,
             name: "",
             number: "",
             bank_id: null,
@@ -29,6 +30,7 @@ export const useBankAccountStore = defineStore("bank-accounts", {
     }),
     actions: {
         async get(params) {
+            this.clear();
             const auth = useAuthStore();
 
             const res = await axios.get("bank-accounts", {
@@ -44,6 +46,7 @@ export const useBankAccountStore = defineStore("bank-accounts", {
             this.pagination.per_page = res.data.meta.per_page;
         },
         async show(id, params) {
+            this.clear();
             const auth = useAuthStore();
 
             const res = await axios.get(`bank-accounts/${id}/show`, {
@@ -79,6 +82,7 @@ export const useBankAccountStore = defineStore("bank-accounts", {
                     toast.success("successfully updated.");
                 }
 
+                this.clear();
                 router.push("/bank-accounts");
             } catch (error) {
                 const data = error.response.data;
@@ -125,6 +129,15 @@ export const useBankAccountStore = defineStore("bank-accounts", {
                     toast.error(data.message);
                 }
             }
+        },
+        clear() {
+            this.bank_account.id = null;
+            this.bank_account.name = "";
+            this.bank_account.number = "";
+            this.bank_account.bank_id = null;
+
+            this.bank_account.bank.id = null;
+            this.bank_account.bank.name = "";
         },
     },
 });

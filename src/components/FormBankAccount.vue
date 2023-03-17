@@ -81,9 +81,6 @@ export default {
         async handleSubmit() {
             await this.save(this.bank_account, this.$route.params.id);
         },
-        clearForm() {
-            this.bank_account = {};
-        },
     },
 };
 </script>

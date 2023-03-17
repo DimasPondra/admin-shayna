@@ -57,8 +57,6 @@ export default {
         ...mapActions(useBannerStore, ["save"]),
         async handleSubmit() {
             await this.save(this.banner);
-
-            this.clearForm();
         },
         async handleUpload(event) {
             let form = new FormData();
@@ -72,10 +70,6 @@ export default {
 
             await this.upload(form);
             this.banner.file_id = await this.file.id;
-        },
-        clearForm() {
-            this.banner = {};
-            this.file = {};
         },
     },
 };

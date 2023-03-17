@@ -3,6 +3,7 @@ import { defineStore } from "pinia";
 import { useToast } from "vue-toastification";
 import { useAuthStore } from "./auth";
 import router from "../router";
+import { useFileStore } from "./files";
 
 export const useBannerStore = defineStore("banners", {
     state: () => ({
@@ -25,6 +26,7 @@ export const useBannerStore = defineStore("banners", {
     }),
     actions: {
         async get(params) {
+            this.clear();
             const auth = useAuthStore();
 
             const res = await axios.get("banners", {
@@ -53,6 +55,7 @@ export const useBannerStore = defineStore("banners", {
 
                 toast.success("successfully created.");
 
+                this.clear();
                 router.push("/banners");
             } catch (error) {
                 const data = error.response.data;
@@ -79,6 +82,14 @@ export const useBannerStore = defineStore("banners", {
                     toast.error(data.message);
                 }
             }
+        },
+        clear() {
+            this.banner.name = "";
+            this.banner.description = "";
+            this.banner.file_id = null;
+
+            const file = useFileStore();
+            file.$reset();
         },
     },
 });

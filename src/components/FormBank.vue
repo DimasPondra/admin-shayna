@@ -36,11 +36,6 @@ export default {
         },
         async handleSubmit() {
             await this.save(this.bank, this.$route.params.id);
-
-            this.clearForm();
-        },
-        clearForm() {
-            this.bank = {};
         },
     },
 };

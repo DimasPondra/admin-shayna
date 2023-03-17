@@ -17,6 +17,8 @@
 <script>
 import Navbar from "../../components/Navbar.vue";
 import FormBank from "../../components/FormBank.vue";
+import { mapState } from "pinia";
+import { useBankStore } from "../../stores/banks";
 
 export default {
     components: {
@@ -30,6 +32,9 @@ export default {
                 link: "/banks",
             },
         };
+    },
+    computed: {
+        ...mapState(useBankStore, ["bank"]),
     },
     created() {
         document.title = `Admin Shayna - ${this.$route.meta.title}`;
