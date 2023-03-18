@@ -15,7 +15,7 @@
                                 type="text"
                                 class="form-control border-0 shadow-sm"
                                 name="name"
-                                v-model="search_name"
+                                v-model="filter_name"
                                 placeholder="Search name"
                             />
                         </div>
@@ -39,12 +39,13 @@
 <script>
 import "@popperjs/core";
 import "bootstrap/dist/js/bootstrap.bundle";
-import axios from "axios";
+
 import Navbar from "../../components/Navbar.vue";
 import TableUser from "../../components/TableUser.vue";
 import Pagination from "../../components/Pagination.vue";
-import { mapState } from "pinia";
-import { useAuthStore } from "../../stores/auth";
+
+import { mapActions, mapState } from "pinia";
+import { useUserStore } from "../../stores/users";
 
 export default {
     components: {
@@ -54,21 +55,10 @@ export default {
     },
     data() {
         return {
-            users: [],
-            pagination: {
-                page: 1,
-                total: 0,
-                per_page: 5,
-                option: {
-                    chunk: 3,
-                    chunksNavigation: "scroll",
-                    hideCount: true,
-                },
-            },
             search: {
                 name: "",
             },
-            search_name: "",
+            filter_name: "",
             navbar: {
                 title: "Users",
                 link: null,
@@ -76,44 +66,35 @@ export default {
         };
     },
     computed: {
+        ...mapState(useUserStore, ["users", "pagination"]),
         params: function () {
             return {
-                page: this.pagination.page,
-                per_page: this.pagination.per_page,
+                page: 1,
+                per_page: 5,
                 name: this.search.name,
             };
         },
-        ...mapState(useAuthStore, ["token"]),
     },
     watch: {
-        search_name(value) {
+        filter_name(value) {
             this.search.name = value;
-            this.pagination.page = 1;
-            this.loadData();
+            this.params.page = 1;
+            this.loadUsers();
         },
     },
     created() {
-        this.loadData();
         document.title = `Admin Shayna - ${this.$route.meta.title}`;
+        this.loadUsers();
     },
     methods: {
-        async loadData(value) {
+        ...mapActions(useUserStore, ["get"]),
+        async loadUsers(value) {
             this.params.page = value != null ? value : this.params.page;
 
-            const response = await axios.get("users", {
-                params: this.params,
-                headers: {
-                    Authorization: this.token,
-                },
-            });
-            this.users = response.data.data;
-
-            this.pagination.page = response.data.meta.current_page;
-            this.pagination.total = response.data.meta.total;
-            this.pagination.per_page = response.data.meta.per_page;
+            await this.get(this.params);
         },
-        changePage(value) {
-            this.loadData(value);
+        async changePage(value) {
+            await this.loadUsers(value);
         },
     },
 };
