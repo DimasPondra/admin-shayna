@@ -22,41 +22,17 @@
 </template>
 
 <script>
-import axios from "axios";
-import { useToast } from "vue-toastification";
-import { mapState } from "pinia";
-import { useAuthStore } from "../stores/auth";
+import { mapActions, mapState } from "pinia";
+import { useTransactionStore } from "../stores/transactions";
 
 export default {
-    data() {
-        return {
-            transaction: {
-                status: null,
-            },
-        };
-    },
     computed: {
-        ...mapState(useAuthStore, ["token"]),
+        ...mapState(useTransactionStore, ["transaction"]),
     },
     methods: {
+        ...mapActions(useTransactionStore, ["save"]),
         async handleSubmit() {
-            const toast = useToast();
-
-            try {
-                await axios.patch(`transactions/${this.$route.params.id}/update`, this.transaction, {
-                    headers: {
-                        Authorization: this.token,
-                    },
-                });
-
-                toast.success("successfully updated.");
-                this.$router.push("/transactions");
-            } catch (error) {
-                const data = error.response.data;
-                if (data.message != null) {
-                    toast.error(data.message);
-                }
-            }
+            await this.save(this.transaction, this.$route.params.id);
         },
     },
 };

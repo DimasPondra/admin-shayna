@@ -60,14 +60,16 @@
                                                 <h6 class="card-subtitle text-muted">Status</h6>
                                             </td>
                                             <td>
-                                                <h6 class="card-subtitle text-muted">: {{ transaction.status }}</h6>
+                                                <h6 class="card-subtitle text-muted">
+                                                    : {{ transaction.current_status }}
+                                                </h6>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                        <div class="row" v-show="transaction.status === 'pending'">
+                        <div class="row" v-show="transaction.current_status === 'pending'">
                             <FormStatusTransaction />
                         </div>
                     </div>
@@ -107,10 +109,9 @@
 
 <script>
 import Navbar from "../../components/Navbar.vue";
-import axios from "axios";
-import { mapState } from "pinia";
-import { useAuthStore } from "../../stores/auth";
+import { mapActions, mapState } from "pinia";
 import FormStatusTransaction from "../../components/FormStatusTransaction.vue";
+import { useTransactionStore } from "../../stores/transactions";
 
 export default {
     components: {
@@ -123,52 +124,26 @@ export default {
                 title: "Transaction",
                 link: "/transactions",
             },
-            transaction: {
-                uuid: "",
-                sub_total: "",
-                total: "",
-                status: "",
-                user: {
-                    name: "",
-                    email: "",
-                },
-                details: [],
-            },
         };
     },
     computed: {
+        ...mapState(useTransactionStore, ["transaction"]),
         params: function () {
             return {
                 include: "user,transaction_details",
             };
         },
-        ...mapState(useAuthStore, ["token"]),
     },
     created() {
-        this.loadTransaction();
         document.title = `Admin Shayna - ${this.$route.meta.title}`;
+        if (this.$route.params.id != undefined) {
+            this.loadTransaction();
+        }
     },
     methods: {
+        ...mapActions(useTransactionStore, ["show"]),
         async loadTransaction() {
-            if (this.$route.params.id != undefined) {
-                const response = await axios.get(`transactions/${this.$route.params.id}/show`, {
-                    params: this.params,
-                    headers: {
-                        Authorization: this.token,
-                    },
-                });
-                const data = response.data.data;
-
-                this.transaction.uuid = data.uuid;
-                this.transaction.sub_total = data.sub_total;
-                this.transaction.total = data.total;
-                this.transaction.status = data.status;
-
-                this.transaction.user.name = data.user.name;
-                this.transaction.user.email = data.user.email;
-
-                this.transaction.details = data.transaction_details;
-            }
+            await this.show(this.$route.params.id, this.params);
         },
         toggleNavbar() {
             this.$emit("clicked", "open");
