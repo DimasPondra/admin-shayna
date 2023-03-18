@@ -101,7 +101,7 @@ export default {
         },
         async handleDelete(id) {
             await this.delete(id);
-            await this.loadBanks();
+            await this.loadBanks(1);
         },
     },
 };

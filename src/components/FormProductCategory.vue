@@ -24,7 +24,7 @@ export default {
     computed: {
         ...mapState(useProductCategoryStore, ["product_category"]),
     },
-    async created() {
+    created() {
         if (this.$route.params.id != undefined) {
             this.loadProductCategory();
         }

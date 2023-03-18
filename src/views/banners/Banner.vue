@@ -76,7 +76,7 @@ export default {
         },
         async handleDelete(id) {
             await this.delete(id);
-            await this.loadBanners();
+            await this.loadBanners(1);
         },
     },
 };

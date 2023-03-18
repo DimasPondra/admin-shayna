@@ -24,7 +24,7 @@ export default {
     computed: {
         ...mapState(useBankStore, ["bank"]),
     },
-    async created() {
+    created() {
         if (this.$route.params.id != undefined) {
             this.loadBank();
         }

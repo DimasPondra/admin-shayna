@@ -63,7 +63,7 @@ export default {
             };
         },
     },
-    async created() {
+    created() {
         this.loadBanks();
         if (this.$route.params.id != undefined) {
             this.loadBankAccount();

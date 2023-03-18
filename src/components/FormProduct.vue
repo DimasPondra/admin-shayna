@@ -55,7 +55,7 @@
                 </div>
             </div>
 
-            <div v-if="file.url != ''">
+            <div v-if="file.id != null">
                 <img :src="file.url" alt="image-blog" width="150" class="rounded" />
             </div>
 
@@ -75,114 +75,42 @@
 </template>
 
 <script>
-import axios from "axios";
-import { useToast } from "vue-toastification";
-import { mapState } from "pinia";
-import { useAuthStore } from "../stores/auth";
+import { mapActions, mapState } from "pinia";
+import { useProductCategoryStore } from "../stores/product-categories";
+import { useFileStore } from "../stores/files";
+import { useProductStore } from "../stores/products";
 
 export default {
-    data() {
-        return {
-            product: {
-                id: null,
-                name: "",
-                description: "",
-                price: null,
-                product_category_id: "",
-                file_id: null,
-            },
-            file: {
-                id: null,
-                url: "",
-            },
-            folder_name: "products",
-            product_categories: [],
-        };
-    },
     computed: {
+        ...mapState(useProductCategoryStore, ["product_categories"]),
+        ...mapState(useFileStore, ["file"]),
+        ...mapState(useProductStore, ["product"]),
         params: function () {
             return {
                 include: "category,file",
             };
         },
-        ...mapState(useAuthStore, ["token"]),
     },
     created() {
         this.loadProductCategories();
-        this.loadProduct();
+        if (this.$route.params.id != undefined) {
+            this.loadProduct();
+        }
     },
     methods: {
-        async loadProduct() {
-            if (this.$route.params.id != undefined) {
-                const response = await axios.get(`products/${this.$route.params.id}/show`, {
-                    params: this.params,
-                    headers: {
-                        Authorization: this.token,
-                    },
-                });
-                const data = response.data.data;
-
-                this.product.id = data.id;
-                this.product.name = data.name;
-                this.product.description = data.description;
-                this.product.price = parseInt(data.price);
-                this.product.product_category_id = data.category.id;
-                this.product.file_id = data.file.id;
-                this.file.url = data.file.url;
-            }
-        },
+        ...mapActions(useProductCategoryStore, ["get"]),
+        ...mapActions(useProductStore, ["show", "save"]),
+        ...mapActions(useFileStore, ["upload"]),
         async loadProductCategories() {
-            const response = await axios.get("product-categories", {
-                headers: {
-                    Authorization: this.token,
-                },
-            });
-            this.product_categories = response.data.data;
+            await this.get();
+        },
+        async loadProduct() {
+            await this.show(this.$route.params.id, this.params);
         },
         async handleSubmit() {
-            const toast = useToast();
-
-            try {
-                if (this.product.id == null) {
-                    await axios.post("products/store", this.product, {
-                        headers: {
-                            Authorization: this.token,
-                        },
-                    });
-
-                    toast.success("successfully created.");
-                } else {
-                    await axios.patch(`products/${this.$route.params.id}/update`, this.product, {
-                        headers: {
-                            Authorization: this.token,
-                        },
-                    });
-                    toast.success("successfully updated.");
-                }
-
-                this.clearForm();
-                this.$router.push("/products");
-            } catch (error) {
-                const data = error.response.data;
-                if (data.message != null) {
-                    toast.error(data.message);
-                }
-            }
-        },
-        clearForm() {
-            this.product.id = null;
-            this.product.name = "";
-            this.product.description = "";
-            this.product.price = null;
-            this.product.product_category_id = null;
-            this.product.file_id = null;
-
-            this.file.id = null;
-            this.file.url = "";
+            await this.save(this.product, this.$route.params.id);
         },
         async handleUpload(event) {
-            const toast = useToast();
-
             let form = new FormData();
             let file = event.target.files;
 
@@ -190,23 +118,10 @@ export default {
                 form.append(`files[${i}]`, file[i]);
             }
 
-            form.append("folder_name", this.folder_name);
+            form.append("folder_name", "products");
 
-            try {
-                const response = await axios.post("files/store", form, {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                        Authorization: this.token,
-                    },
-                });
-
-                this.file = response.data.data[0];
-                this.product.file_id = this.file.id;
-
-                toast.success("image successfully uploaded.");
-            } catch (error) {
-                console.log(error);
-            }
+            await this.upload(form);
+            this.product.file_id = await this.file.id;
         },
     },
 };

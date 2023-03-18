@@ -17,7 +17,7 @@
                             <input
                                 type="text"
                                 class="form-control border-0 shadow-sm"
-                                v-model="search_name"
+                                v-model="filter_name"
                                 placeholder="Search name"
                             />
                         </div>
@@ -41,13 +41,13 @@
 <script>
 import "@popperjs/core";
 import "bootstrap/dist/js/bootstrap.bundle";
-import axios from "axios";
-import { useToast } from "vue-toastification";
+
 import Navbar from "../../components/Navbar.vue";
 import TableProduct from "../../components/TableProduct.vue";
 import Pagination from "../../components/Pagination.vue";
-import { mapState } from "pinia";
-import { useAuthStore } from "../../stores/auth";
+
+import { mapActions, mapState } from "pinia";
+import { useProductStore } from "../../stores/products";
 
 export default {
     components: {
@@ -57,21 +57,10 @@ export default {
     },
     data() {
         return {
-            products: [],
-            pagination: {
-                page: 1,
-                total: 0,
-                per_page: 5,
-                option: {
-                    chunk: 3,
-                    chunksNavigation: "scroll",
-                    hideCount: true,
-                },
-            },
             search: {
                 name: "",
             },
-            search_name: "",
+            filter_name: "",
             navbar: {
                 title: "Products",
                 link: null,
@@ -79,59 +68,39 @@ export default {
         };
     },
     computed: {
+        ...mapState(useProductStore, ["products", "pagination"]),
         params: function () {
             return {
-                page: this.pagination.page,
-                per_page: this.pagination.per_page,
+                page: 1,
+                per_page: 5,
                 name: this.search.name,
             };
         },
-        ...mapState(useAuthStore, ["token"]),
     },
     watch: {
-        search_name(value) {
+        filter_name(value) {
             this.search.name = value;
-            this.pagination.page = 1;
-            this.loadData();
+            this.params.page = 1;
+            this.loadProducts();
         },
     },
     created() {
-        this.loadData();
         document.title = `Admin Shayna - ${this.$route.meta.title}`;
+        this.loadProducts();
     },
     methods: {
-        async loadData(value) {
+        ...mapActions(useProductStore, ["get", "delete"]),
+        async loadProducts(value) {
             this.params.page = value != null ? value : this.params.page;
 
-            const response = await axios.get("products", {
-                params: this.params,
-                headers: {
-                    Authorization: this.token,
-                },
-            });
-            this.products = response.data.data;
-
-            this.pagination.page = response.data.meta.current_page;
-            this.pagination.total = response.data.meta.total;
-            this.pagination.per_page = response.data.meta.per_page;
+            await this.get(this.params);
+        },
+        async changePage(value) {
+            await this.loadProducts(value);
         },
         async handleDelete(id) {
-            try {
-                await axios.delete(`products/${id}/delete`, {
-                    headers: {
-                        Authorization: this.token,
-                    },
-                });
-                this.loadData();
-
-                const toast = useToast();
-                toast.success("successfully deleted.");
-            } catch (error) {
-                console.error(error);
-            }
-        },
-        changePage(value) {
-            this.loadData(value);
+            await this.delete(id);
+            await this.loadProducts(1);
         },
     },
 };

@@ -106,7 +106,7 @@ export default {
         },
         async handleDelete(id) {
             await this.delete(id);
-            await this.loadProductCategories();
+            await this.loadProductCategories(1);
         },
     },
 };

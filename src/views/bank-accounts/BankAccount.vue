@@ -111,7 +111,7 @@ export default {
         },
         async handleChangeStatus(id) {
             await this.changeStatus(id);
-            await this.loadBankAccounts();
+            await this.loadBankAccounts(1);
         },
     },
 };
