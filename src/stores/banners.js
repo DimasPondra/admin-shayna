@@ -84,9 +84,11 @@ export const useBannerStore = defineStore("banners", {
             }
         },
         clear() {
-            this.banner.name = "";
-            this.banner.description = "";
-            this.banner.file_id = null;
+            this.banner = {
+                name: "",
+                description: "",
+                file_id: null,
+            };
 
             const file = useFileStore();
             file.$reset();

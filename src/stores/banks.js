@@ -103,8 +103,10 @@ export const useBankStore = defineStore("banks", {
             }
         },
         clear() {
-            this.bank.id = null;
-            this.bank.name = "";
+            this.bank = {
+                id: null,
+                name: "",
+            };
         },
     },
 });

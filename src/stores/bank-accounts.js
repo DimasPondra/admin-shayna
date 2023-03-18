@@ -131,13 +131,16 @@ export const useBankAccountStore = defineStore("bank-accounts", {
             }
         },
         clear() {
-            this.bank_account.id = null;
-            this.bank_account.name = "";
-            this.bank_account.number = "";
-            this.bank_account.bank_id = null;
-
-            this.bank_account.bank.id = null;
-            this.bank_account.bank.name = "";
+            this.bank_account = {
+                id: null,
+                name: "",
+                number: "",
+                bank_id: null,
+                bank: {
+                    id: null,
+                    name: "",
+                },
+            };
         },
     },
 });

@@ -103,8 +103,10 @@ export const useProductCategoryStore = defineStore("product-categories", {
             }
         },
         clear() {
-            this.product_category.id = null;
-            this.product_category.name = "";
+            this.product_category = {
+                id: null,
+                name: "",
+            };
         },
     },
 });

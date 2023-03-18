@@ -112,12 +112,14 @@ export const useProductStore = defineStore("products", {
             }
         },
         clear() {
-            this.product.id = null;
-            this.product.name = "";
-            this.product.description = "";
-            this.product.price = null;
-            this.product.product_category_id = null;
-            this.product.file_id = null;
+            this.product = {
+                id: null,
+                name: "",
+                description: "",
+                price: null,
+                product_category_id: null,
+                file_id: null,
+            };
 
             const file = useFileStore();
             file.$reset();
