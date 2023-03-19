@@ -62,10 +62,9 @@
 </template>
 
 <script>
-import axios from "axios";
 import Navbar from "../components/Navbar.vue";
-import { mapState } from "pinia";
-import { useAuthStore } from "../stores/auth";
+import { mapActions, mapState } from "pinia";
+import { useDashboardStore } from "../stores/dashboard";
 
 export default {
     components: {
@@ -77,25 +76,19 @@ export default {
                 title: "Overview",
                 link: null,
             },
-            dashboard: {},
         };
     },
     computed: {
-        ...mapState(useAuthStore, ["token"]),
+        ...mapState(useDashboardStore, ["dashboard"]),
     },
     created() {
-        this.loadData();
         document.title = `Admin Shayna - ${this.$route.meta.title}`;
+        this.loadDashboard();
     },
     methods: {
-        async loadData() {
-            const response = await axios.get("dashboard", {
-                headers: {
-                    Authorization: this.token,
-                },
-            });
-
-            this.dashboard = response.data.data;
+        ...mapActions(useDashboardStore, ["get"]),
+        async loadDashboard() {
+            await this.get();
         },
         toggleNavbar() {
             this.$emit("clicked", "open");
