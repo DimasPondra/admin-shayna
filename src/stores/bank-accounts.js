@@ -3,6 +3,7 @@ import { defineStore } from "pinia";
 import { useToast } from "vue-toastification";
 import { useAuthStore } from "./auth";
 import router from "../router";
+import { useAlertStore } from "./alert";
 
 export const useBankAccountStore = defineStore("bank-accounts", {
     state: () => ({
@@ -32,36 +33,46 @@ export const useBankAccountStore = defineStore("bank-accounts", {
         async get(params) {
             this.clear();
             const auth = useAuthStore();
+            const alert = useAlertStore();
 
-            const res = await axios.get("bank-accounts", {
-                params: params,
-                headers: {
-                    Authorization: auth.token,
-                },
-            });
+            try {
+                const res = await axios.get("bank-accounts", {
+                    params: params,
+                    headers: {
+                        Authorization: auth.token,
+                    },
+                });
 
-            this.bank_accounts = res.data.data;
-            this.pagination.page = res.data.meta.current_page;
-            this.pagination.total = res.data.meta.total;
-            this.pagination.per_page = res.data.meta.per_page;
+                this.bank_accounts = res.data.data;
+                this.pagination.page = res.data.meta.current_page;
+                this.pagination.total = res.data.meta.total;
+                this.pagination.per_page = res.data.meta.per_page;
+            } catch (error) {
+                alert.handleError(error);
+            }
         },
         async show(id, params) {
             this.clear();
             const auth = useAuthStore();
+            const alert = useAlertStore();
 
-            const res = await axios.get(`bank-accounts/${id}/show`, {
-                params: params,
-                headers: {
-                    Authorization: auth.token,
-                },
-            });
+            try {
+                const res = await axios.get(`bank-accounts/${id}/show`, {
+                    params: params,
+                    headers: {
+                        Authorization: auth.token,
+                    },
+                });
 
-            this.bank_account = res.data.data;
-            this.bank_account.bank_id = res.data.data.bank.id;
+                this.bank_account = res.data.data;
+                this.bank_account.bank_id = res.data.data.bank.id;
+            } catch (error) {
+                alert.handleError(error);
+            }
         },
         async save(data, id) {
             const auth = useAuthStore();
-            const toast = useToast();
+            const alert = useAlertStore();
 
             try {
                 if (id == null) {
@@ -71,7 +82,7 @@ export const useBankAccountStore = defineStore("bank-accounts", {
                         },
                     });
 
-                    toast.success("successfully created.");
+                    alert.handleSuccess("successfully created.");
                 } else {
                     await axios.patch(`bank-accounts/${id}/update`, data, {
                         headers: {
@@ -79,21 +90,18 @@ export const useBankAccountStore = defineStore("bank-accounts", {
                         },
                     });
 
-                    toast.success("successfully updated.");
+                    alert.handleSuccess("successfully updated.");
                 }
 
                 this.clear();
                 router.push("/bank-accounts");
             } catch (error) {
-                const data = error.response.data;
-                if (data.message != null) {
-                    toast.error(data.message);
-                }
+                alert.handleError(error);
             }
         },
         async delete(id) {
             const auth = useAuthStore();
-            const toast = useToast();
+            const alert = useAlertStore();
 
             try {
                 await axios.delete(`bank-accounts/${id}/delete`, {
@@ -102,14 +110,14 @@ export const useBankAccountStore = defineStore("bank-accounts", {
                     },
                 });
 
-                toast.success("successfully deleted.");
+                alert.handleSuccess("successfully deleted.");
             } catch (error) {
-                console.log(error);
+                alert.handleError(error);
             }
         },
         async changeStatus(id) {
             const auth = useAuthStore();
-            const toast = useToast();
+            const alert = useAlertStore();
 
             try {
                 await axios.patch(
@@ -122,12 +130,9 @@ export const useBankAccountStore = defineStore("bank-accounts", {
                     }
                 );
 
-                toast.success("successfully updated.");
+                alert.handleSuccess("successfully updated.");
             } catch (error) {
-                const data = error.response.data;
-                if (data.message != null) {
-                    toast.error(data.message);
-                }
+                alert.handleError(error);
             }
         },
         clear() {

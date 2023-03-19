@@ -2,6 +2,7 @@ import axios from "axios";
 import { defineStore } from "pinia";
 import { useToast } from "vue-toastification";
 import router from "../router";
+import { useAlertStore } from "./alert";
 import { useAuthStore } from "./auth";
 
 export const useProductCategoryStore = defineStore("product-categories", {
@@ -26,37 +27,47 @@ export const useProductCategoryStore = defineStore("product-categories", {
         async get(params) {
             this.clear();
             const auth = useAuthStore();
+            const alert = useAlertStore();
 
-            const res = await axios.get("product-categories", {
-                params: params,
-                headers: {
-                    Authorization: auth.token,
-                },
-            });
+            try {
+                const res = await axios.get("product-categories", {
+                    params: params,
+                    headers: {
+                        Authorization: auth.token,
+                    },
+                });
 
-            this.product_categories = res.data.data;
+                this.product_categories = res.data.data;
 
-            if (res.data.meta != null) {
-                this.pagination.page = res.data.meta.current_page;
-                this.pagination.total = res.data.meta.total;
-                this.pagination.per_page = res.data.meta.per_page;
+                if (res.data.meta != null) {
+                    this.pagination.page = res.data.meta.current_page;
+                    this.pagination.total = res.data.meta.total;
+                    this.pagination.per_page = res.data.meta.per_page;
+                }
+            } catch (error) {
+                alert.handleError(error);
             }
         },
         async show(id) {
             this.clear();
             const auth = useAuthStore();
+            const alert = useAlertStore();
 
-            const res = await axios.get(`product-categories/${id}/show`, {
-                headers: {
-                    Authorization: auth.token,
-                },
-            });
+            try {
+                const res = await axios.get(`product-categories/${id}/show`, {
+                    headers: {
+                        Authorization: auth.token,
+                    },
+                });
 
-            this.product_category = res.data.data;
+                this.product_category = res.data.data;
+            } catch (error) {
+                alert.handleError(error);
+            }
         },
         async save(data, id) {
             const auth = useAuthStore();
-            const toast = useToast();
+            const alert = useAlertStore();
 
             try {
                 if (id == null) {
@@ -66,7 +77,7 @@ export const useProductCategoryStore = defineStore("product-categories", {
                         },
                     });
 
-                    toast.success("successfully created.");
+                    alert.handleSuccess("successfully created.");
                 } else {
                     await axios.patch(`product-categories/${id}/update`, data, {
                         headers: {
@@ -74,21 +85,18 @@ export const useProductCategoryStore = defineStore("product-categories", {
                         },
                     });
 
-                    toast.success("successfully updated.");
+                    alert.handleSuccess("successfully updated.");
                 }
 
                 this.clear();
                 router.push("/product-categories");
             } catch (error) {
-                const data = error.response.data;
-                if (data.message != null) {
-                    toast.error(data.message);
-                }
+                alert.handleError(error);
             }
         },
         async delete(id) {
             const auth = useAuthStore();
-            const toast = useToast();
+            const alert = useAlertStore();
 
             try {
                 await axios.delete(`product-categories/${id}/delete`, {
@@ -97,9 +105,9 @@ export const useProductCategoryStore = defineStore("product-categories", {
                     },
                 });
 
-                toast.success("successfully deleted.");
+                alert.handleSuccess("successfully deleted.");
             } catch (error) {
-                console.log(error);
+                alert.handleError(error);
             }
         },
         clear() {

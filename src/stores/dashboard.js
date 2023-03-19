@@ -1,5 +1,6 @@
 import axios from "axios";
 import { defineStore } from "pinia";
+import { useAlertStore } from "./alert";
 import { useAuthStore } from "./auth";
 
 export const useDashboardStore = defineStore("dashboard", {
@@ -10,14 +11,19 @@ export const useDashboardStore = defineStore("dashboard", {
         async get(params) {
             this.clear();
             const auth = useAuthStore();
+            const alert = useAlertStore();
 
-            const res = await axios.get("dashboard", {
-                headers: {
-                    Authorization: auth.token,
-                },
-            });
+            try {
+                const res = await axios.get("dashboard", {
+                    headers: {
+                        Authorization: auth.token,
+                    },
+                });
 
-            this.dashboard = res.data.data;
+                this.dashboard = res.data.data;
+            } catch (error) {
+                alert.handle(error);
+            }
         },
         clear() {
             this.dashboard = {};

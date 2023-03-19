@@ -4,6 +4,7 @@ import { useToast } from "vue-toastification";
 import { useAuthStore } from "./auth";
 import router from "../router";
 import { useFileStore } from "./files";
+import { useAlertStore } from "./alert";
 
 export const useBannerStore = defineStore("banners", {
     state: () => ({
@@ -28,23 +29,28 @@ export const useBannerStore = defineStore("banners", {
         async get(params) {
             this.clear();
             const auth = useAuthStore();
+            const alert = useAlertStore();
 
-            const res = await axios.get("banners", {
-                params: params,
-                headers: {
-                    Authorization: auth.token,
-                },
-            });
+            try {
+                const res = await axios.get("banners", {
+                    params: params,
+                    headers: {
+                        Authorization: auth.token,
+                    },
+                });
 
-            this.banners = res.data.data;
+                this.banners = res.data.data;
 
-            this.pagination.page = res.data.meta.current_page;
-            this.pagination.total = res.data.meta.total;
-            this.pagination.per_page = res.data.meta.per_page;
+                this.pagination.page = res.data.meta.current_page;
+                this.pagination.total = res.data.meta.total;
+                this.pagination.per_page = res.data.meta.per_page;
+            } catch (error) {
+                alert.handleError(error);
+            }
         },
         async save(data) {
             const auth = useAuthStore();
-            const toast = useToast();
+            const alert = useAlertStore();
 
             try {
                 await axios.post("banners/store", data, {
@@ -53,20 +59,17 @@ export const useBannerStore = defineStore("banners", {
                     },
                 });
 
-                toast.success("successfully created.");
+                alert.handleSuccess("successfully created.");
 
                 this.clear();
                 router.push("/banners");
             } catch (error) {
-                const data = error.response.data;
-                if (data.message != null) {
-                    toast.error(data.message);
-                }
+                alert.handleError(error);
             }
         },
         async delete(id) {
             const auth = useAuthStore();
-            const toast = useToast();
+            const alert = useAlertStore();
 
             try {
                 await axios.delete(`banners/${id}/delete`, {
@@ -75,12 +78,9 @@ export const useBannerStore = defineStore("banners", {
                     },
                 });
 
-                toast.success("successfully deleted.");
+                alert.handleSuccess("successfully deleted.");
             } catch (error) {
-                const data = error.response.data;
-                if (data.message != null) {
-                    toast.error(data.message);
-                }
+                alert.handleError(error);
             }
         },
         clear() {

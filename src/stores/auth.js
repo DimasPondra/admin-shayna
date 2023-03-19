@@ -3,6 +3,7 @@ import axios from "axios";
 import { useToast } from "vue-toastification";
 import router from "../router";
 import SecureLS from "secure-ls";
+import { useAlertStore } from "./alert";
 
 const secureLS = new SecureLS({
     encodingType: "aes",
@@ -16,6 +17,7 @@ export const useAuthStore = defineStore("auth", {
     actions: {
         async login(user) {
             const toast = useToast();
+            const alert = useAlertStore();
 
             try {
                 const response = await axios.post("login", user);
@@ -24,15 +26,13 @@ export const useAuthStore = defineStore("auth", {
                 toast.success("welcome.");
                 router.push("/");
             } catch (error) {
-                const data = error.response.data;
-                if (data.message != null) {
-                    toast.error(data.message);
-                }
+                alert.handle(error);
             }
         },
 
         async logout() {
             const toast = useToast();
+            const alert = useAlertStore();
 
             try {
                 await axios.post("logout", "", {
@@ -45,10 +45,7 @@ export const useAuthStore = defineStore("auth", {
                 this.token = null;
                 router.push("/login");
             } catch (error) {
-                const data = error.response.data;
-                if (data.message != null) {
-                    toast.error(data.message);
-                }
+                alert.handle(error);
             }
         },
     },

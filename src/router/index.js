@@ -25,6 +25,16 @@ const router = createRouter({
                 middleware: [AuthMiddleware],
             },
         },
+        {
+            path: "/404",
+            name: "404",
+            component: () => import("../views/404.vue"),
+            meta: {
+                title: "404",
+                name_page: "404",
+                middleware: [AuthMiddleware],
+            },
+        },
         // {
         //     path: "/form",
         //     name: "form",

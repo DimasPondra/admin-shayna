@@ -1,5 +1,6 @@
 import axios from "axios";
 import { defineStore } from "pinia";
+import { useAlertStore } from "./alert";
 import { useAuthStore } from "./auth";
 
 export const useUserStore = defineStore("users", {
@@ -19,19 +20,24 @@ export const useUserStore = defineStore("users", {
     actions: {
         async get(params) {
             const auth = useAuthStore();
+            const alert = useAlertStore();
 
-            const res = await axios.get("users", {
-                params: params,
-                headers: {
-                    Authorization: auth.token,
-                },
-            });
+            try {
+                const res = await axios.get("users", {
+                    params: params,
+                    headers: {
+                        Authorization: auth.token,
+                    },
+                });
 
-            this.users = res.data.data;
+                this.users = res.data.data;
 
-            this.pagination.page = res.data.meta.current_page;
-            this.pagination.total = res.data.meta.total;
-            this.pagination.per_page = res.data.meta.per_page;
+                this.pagination.page = res.data.meta.current_page;
+                this.pagination.total = res.data.meta.total;
+                this.pagination.per_page = res.data.meta.per_page;
+            } catch (error) {
+                alert.handleError(error);
+            }
         },
     },
 });

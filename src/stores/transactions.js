@@ -2,6 +2,7 @@ import axios from "axios";
 import { defineStore } from "pinia";
 import { useToast } from "vue-toastification";
 import router from "../router";
+import { useAlertStore } from "./alert";
 import { useAuthStore } from "./auth";
 
 export const useTransactionStore = defineStore("transactions", {
@@ -34,38 +35,48 @@ export const useTransactionStore = defineStore("transactions", {
         async get(params) {
             this.clear();
             const auth = useAuthStore();
+            const alert = useAlertStore();
 
-            const res = await axios.get("transactions", {
-                params: params,
-                headers: {
-                    Authorization: auth.token,
-                },
-            });
+            try {
+                const res = await axios.get("transactions", {
+                    params: params,
+                    headers: {
+                        Authorization: auth.token,
+                    },
+                });
 
-            this.transactions = res.data.data;
+                this.transactions = res.data.data;
 
-            this.pagination.page = res.data.meta.current_page;
-            this.pagination.total = res.data.meta.total;
-            this.pagination.per_page = res.data.meta.per_page;
+                this.pagination.page = res.data.meta.current_page;
+                this.pagination.total = res.data.meta.total;
+                this.pagination.per_page = res.data.meta.per_page;
+            } catch (error) {
+                alert.handleError(error);
+            }
         },
         async show(id, params) {
             this.clear();
             const auth = useAuthStore();
+            const alert = useAlertStore();
 
-            const res = await axios.get(`transactions/${id}/show`, {
-                params: params,
-                headers: {
-                    Authorization: auth.token,
-                },
-            });
+            try {
+                const res = await axios.get(`transactions/${id}/show`, {
+                    params: params,
+                    headers: {
+                        Authorization: auth.token,
+                    },
+                });
 
-            this.transaction = res.data.data;
-            this.transaction.current_status = res.data.data.status;
-            this.transaction.details = res.data.data.transaction_details;
+                this.transaction = res.data.data;
+                this.transaction.current_status = res.data.data.status;
+                this.transaction.details = res.data.data.transaction_details;
+            } catch (error) {
+                alert.handleError(error);
+            }
         },
         async save(data, id) {
             const auth = useAuthStore();
-            const toast = useToast();
+            const alert = useAlertStore();
 
             try {
                 await axios.patch(`transactions/${id}/update`, data, {
@@ -74,15 +85,12 @@ export const useTransactionStore = defineStore("transactions", {
                     },
                 });
 
-                toast.success("successfully updated.");
+                alert.handleSuccess("successfully updated.");
 
                 this.clear();
                 router.push("/transactions");
             } catch (error) {
-                const data = error.response.data;
-                if (data.message != null) {
-                    toast.error(data.message);
-                }
+                alert.handleError(error);
             }
         },
         clear() {
