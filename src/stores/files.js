@@ -1,6 +1,5 @@
 import axios from "axios";
 import { defineStore } from "pinia";
-import { useToast } from "vue-toastification";
 import { useAlertStore } from "./alert";
 import { useAuthStore } from "./auth";
 
@@ -12,7 +11,6 @@ export const useFileStore = defineStore("files", {
         async upload(data) {
             const auth = useAuthStore();
             const alert = useAlertStore();
-            const toast = useToast();
 
             try {
                 const res = await axios.post("files/store", data, {
@@ -24,9 +22,9 @@ export const useFileStore = defineStore("files", {
 
                 this.file = res.data.data[0];
 
-                toast.success("image successfully uploaded.");
+                alert.handleSuccess("image successfully uploaded.");
             } catch (error) {
-                alert.handle(error);
+                alert.handleError(error);
             }
         },
     },

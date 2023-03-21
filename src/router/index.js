@@ -13,6 +13,9 @@ import AuthMiddleware from "../middleware/auth";
 import GuestMiddleware from "../middleware/guest";
 
 const router = createRouter({
+    scrollBehavior(to, from, savedPosition) {
+        return { top: 0 };
+    },
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         {

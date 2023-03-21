@@ -1,6 +1,5 @@
 import axios from "axios";
 import { defineStore } from "pinia";
-import { useToast } from "vue-toastification";
 import router from "../router";
 import { useAlertStore } from "./alert";
 import { useAuthStore } from "./auth";

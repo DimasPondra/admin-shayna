@@ -22,7 +22,7 @@ export const useDashboardStore = defineStore("dashboard", {
 
                 this.dashboard = res.data.data;
             } catch (error) {
-                alert.handle(error);
+                alert.handleError(error);
             }
         },
         clear() {
